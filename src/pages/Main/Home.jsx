@@ -1,3 +1,34 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectGoods } from "../../redux/selectors";
+import { getGoodsList } from "../../redux/goods.thunk";
+import { GoodsListItemStyled, GoodsListStyled } from "./Main.styed";
+
 export const MainPage = () => {
-  return <>Main Page</>;
+  const dispatch = useDispatch();
+  const goods = useSelector(selectGoods);
+  useEffect(() => {
+    dispatch(getGoodsList());
+  }, [dispatch]);
+  console.log(goods);
+  return (
+    <>
+      <GoodsListStyled>
+        {goods.length > 0 &&
+          goods.map((item, index) => {
+            return (
+              <GoodsListItemStyled key={index}>
+                <img
+                  src={`${item.image}`}
+                  width="300px"
+                  height="300px"
+                  alt={`${item.name}`}
+                />
+                <p>{item.name}</p>
+              </GoodsListItemStyled>
+            );
+          })}
+      </GoodsListStyled>
+    </>
+  );
 };
