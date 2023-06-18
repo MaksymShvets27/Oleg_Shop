@@ -10,4 +10,8 @@ export const GoodsListStyled = styled.ul`
   padding: 50px;
 `;
 
-export const GoodsListItemStyled = styled.li``;
+export const GoodsListItemStyled = styled.li`
+  overflow: hidden;
+  border-radius: 20px;
+  border: 2px solid #1a1a1a;
+`;

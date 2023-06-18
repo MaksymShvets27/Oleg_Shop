@@ -10,7 +10,6 @@ export const MainPage = () => {
   useEffect(() => {
     dispatch(getGoodsList());
   }, [dispatch]);
-  console.log(goods);
   return (
     <>
       <GoodsListStyled>
@@ -25,6 +24,7 @@ export const MainPage = () => {
                   alt={`${item.name}`}
                 />
                 <p>{item.name}</p>
+                <p>{item.price}</p>
               </GoodsListItemStyled>
             );
           })}

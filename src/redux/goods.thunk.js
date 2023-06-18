@@ -10,3 +10,17 @@ export const getGoodsList = createAsyncThunk("/", async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue(message);
   }
 });
+
+export const addProductAsyncThunk = createAsyncThunk(
+  "/addProduct",
+  async (product, thunkApi) => {
+    try {
+      const { data } = await axios.post(`${API_URL}/goods`, product);
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
