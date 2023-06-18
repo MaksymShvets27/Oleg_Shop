@@ -10,7 +10,7 @@ export const AdminForm = styled.form`
   padding: 50px;
 `;
 
-export const AdminFormSelectCategory = styled.select`
+export const AdminFormSelect = styled.select`
   width: 330px;
   min-height: 60px;
   padding: 20px 22px;
@@ -34,6 +34,10 @@ export const AdminFormSelectCategory = styled.select`
   &:focus {
     border-color: green;
   }
+`;
+
+export const AdminFormOption = styled.option`
+  width: 330px;
 `;
 
 export const AdminFormInput = styled.input`
