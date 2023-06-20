@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectGoods } from "../../redux/selectors";
 import { getGoodsList } from "../../redux/goods.thunk";
-import { GoodsListItemStyled, GoodsListStyled } from "./Main.styed";
+import {
+  GoodsListItemInfoStyled,
+  GoodsListItemStyled,
+  GoodsListStyled,
+} from "./Main.styed";
 
 export const MainPage = () => {
   const dispatch = useDispatch();
@@ -23,8 +27,10 @@ export const MainPage = () => {
                   height="300px"
                   alt={`${item.name}`}
                 />
-                <p>{item.name}</p>
-                <p>{item.price}</p>
+                <GoodsListItemInfoStyled>
+                  <p>{item.name}</p>
+                  <p>{item.price} грн.</p>
+                </GoodsListItemInfoStyled>
               </GoodsListItemStyled>
             );
           })}

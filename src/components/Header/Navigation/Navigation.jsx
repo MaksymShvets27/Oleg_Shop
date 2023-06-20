@@ -1,10 +1,10 @@
 import { HeaderNavigation, StyledNavigationLink } from "./Navigation.styled";
 
 const pages = [
-  { to: "/", title: "Home" },
-  { to: "/category", title: "Category" },
-  { to: "/search", title: "Search" },
-  { to: "/Admin", title: "Admin" },
+  { to: "/", title: "Головна" },
+  { to: "/category", title: "Категорії" },
+  { to: "/search", title: "Пошук" },
+  { to: "/Admin", title: "Адмін" },
 ];
 
 export const Navigation = () => {
