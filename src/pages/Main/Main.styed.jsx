@@ -8,6 +8,7 @@ export const GoodsListStyled = styled.ul`
   align-items: center;
   gap: 30px;
   padding: 50px;
+  position: reletive;
 `;
 
 export const GoodsListItemStyled = styled.li`
