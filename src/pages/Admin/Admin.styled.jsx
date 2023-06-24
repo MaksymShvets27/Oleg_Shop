@@ -11,7 +11,7 @@ export const AdminForm = styled.form`
 `;
 
 export const AdminFormSelect = styled.select`
-  width: 330px;
+  width: 230px;
   min-height: 60px;
   padding: 20px 22px;
   border-radius: 10px;
@@ -20,7 +20,7 @@ export const AdminFormSelect = styled.select`
   cursor: pointer;
 
   font-family: Poppins;
-  font-size: 24px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 21px;
   letter-spacing: 0px;
@@ -34,14 +34,16 @@ export const AdminFormSelect = styled.select`
   &:focus {
     border-color: green;
   }
+  @media (min-width: 768px) {
+    width: 330px;
+    font-size: 15px;
+  }
 `;
 
-export const AdminFormOption = styled.option`
-  width: 330px;
-`;
+export const AdminFormOption = styled.option``;
 
 export const AdminFormInput = styled.input`
-  width: 282px;
+  width: 182px;
   max-height: 60px;
   padding: 20px 22px;
   border-radius: 10px;
@@ -50,7 +52,7 @@ export const AdminFormInput = styled.input`
   cursor: pointer;
 
   font-family: Poppins;
-  font-size: 24px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 21px;
   letter-spacing: 0px;
@@ -64,10 +66,14 @@ export const AdminFormInput = styled.input`
   &:focus {
     border-color: green;
   }
+  @media (min-width: 768px) {
+    width: 282px;
+    font-size: 24px;
+  }
 `;
 
 export const AdminFormTextArea = styled.textarea`
-  width: 282px;
+  width: 182px;
   min-height: 60px;
   margin-bottom: 32px;
   padding: 20px 22px;
@@ -77,7 +83,7 @@ export const AdminFormTextArea = styled.textarea`
   cursor: pointer;
 
   font-family: Poppins;
-  font-size: 24px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 21px;
   letter-spacing: 0px;
@@ -114,6 +120,11 @@ export const AdminFormTextArea = styled.textarea`
   }
   &:focus {
     border-color: green;
+  }
+
+  @media (min-width: 768px) {
+    width: 282px;
+    font-size: 24px;
   }
 `;
 export const AdminFormSubmit = styled.button`

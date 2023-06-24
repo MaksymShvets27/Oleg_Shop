@@ -184,6 +184,7 @@ export const AdminPage = () => {
         otherInfo: otherInfo.value || false,
       };
       dispatch(addProductAsyncThunk(data));
+      this.reset();
     });
   }, [dispatch]);
 

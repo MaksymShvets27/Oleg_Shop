@@ -4,6 +4,7 @@ import { selectGoods } from "../../redux/selectors";
 import { getGoodsList } from "../../redux/goods.thunk";
 import {
   GoodsListItemInfoStyled,
+  GoodsListItemName,
   GoodsListItemStyled,
   GoodsListStyled,
 } from "./Main.styed";
@@ -29,7 +30,7 @@ export const MainPage = () => {
   }, [dispatch]);
   return (
     <>
-      <GoodsListStyled id="card" key="cardslist">
+      <GoodsListStyled id="card">
         {goods.length > 0 &&
           goods.map((item, index) => {
             return (
@@ -37,15 +38,12 @@ export const MainPage = () => {
                 <GoodsListItemStyled
                   key={index}
                   onClick={() => handleOpenModal(item)}
+                  style={{
+                    backgroundImage: `url(${item.image})`,
+                  }}
                 >
-                  <img
-                    src={`${item.image}`}
-                    width="300px"
-                    height="300px"
-                    alt={`${item.name}`}
-                  />
                   <GoodsListItemInfoStyled>
-                    <p>{item.name}</p>
+                    <GoodsListItemName>{item.name}</GoodsListItemName>
                     <p>{item.price} грн.</p>
                   </GoodsListItemInfoStyled>
                 </GoodsListItemStyled>

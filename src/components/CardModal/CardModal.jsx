@@ -6,11 +6,17 @@ import {
   CardModalLeftDiv,
   CardModalMainDiv,
   CardModalStyled,
+  CardModalTitle,
   ModalOverlay,
   ModalWrapper,
+  StyledGrFormClose,
+  StyledGrFormDelete,
 } from "./CardModal.styled";
+import { useDispatch } from "react-redux";
+import { deleteProductAsyncThunk } from "../../redux/goods.thunk";
 
 export const CardModal = ({ card, closeModal }) => {
+  const dispatch = useDispatch();
   const onClickBackdrop = (e) => {
     if (e.currentTarget === e.target) {
       closeModal();
@@ -37,16 +43,15 @@ export const CardModal = ({ card, closeModal }) => {
           <CardModalMainDiv>
             <CardModalLeftDiv>
               <CardModalImg
-                src={`${card.image}`}
-                width="300px"
-                height="300px"
-                alt={`${card.name}`}
+                style={{
+                  backgroundImage: `url(${card.image})`,
+                }}
               />
               <CardModalBtn>Добавити до покупок</CardModalBtn>
               <CardModalBtn>Добавити до обранного</CardModalBtn>
             </CardModalLeftDiv>
             <CardModalInfo>
-              <h3>{card.name}</h3>
+              <CardModalTitle>{card.name}</CardModalTitle>
               <h4>Ціна:</h4>
               <p>{card.price}грн.</p>
               <h4>Категорія:</h4>
@@ -73,6 +78,13 @@ export const CardModal = ({ card, closeModal }) => {
           </CardModalMainDiv>
           <h4>Додаткова інформація:</h4>
           <p>{card.otherInfo}</p>
+          <StyledGrFormClose onClick={() => closeModal()} />
+          <StyledGrFormDelete
+            onClick={() => {
+              dispatch(deleteProductAsyncThunk(card.id));
+              closeModal();
+            }}
+          />
         </CardModalStyled>
       </ModalWrapper>
     </ModalOverlay>

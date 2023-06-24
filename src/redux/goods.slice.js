@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Notiflix, { Notify } from "notiflix";
-import { addProductAsyncThunk, getGoodsList } from "./goods.thunk";
+import {
+  addProductAsyncThunk,
+  deleteProductAsyncThunk,
+  getGoodsList,
+} from "./goods.thunk";
 
 Notiflix.Notify.init({
   position: "center-top",
@@ -30,11 +34,18 @@ export const goodsSlise = createSlice({
         Notify.failure("Error");
       })
       .addCase(addProductAsyncThunk.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.goods.push(action.payload);
-        Notify.success(`Welcome to beta!`);
+        Notify.success(`Product add!`);
       })
       .addCase(addProductAsyncThunk.rejected, (_) => {
+        Notify.failure("Error");
+      })
+      .addCase(deleteProductAsyncThunk.fulfilled, (state, action) => {
+        let index = action.payload.id;
+        state.goods = state.goods.filter((product) => product.id !== index);
+        Notify.success(`Product delete!`);
+      })
+      .addCase(deleteProductAsyncThunk.rejected, (_) => {
         Notify.failure("Error");
       }),
 });

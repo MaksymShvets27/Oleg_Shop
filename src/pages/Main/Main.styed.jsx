@@ -7,18 +7,40 @@ export const GoodsListStyled = styled.ul`
   flex-wrap: wrap;
   align-items: center;
   gap: 30px;
-  padding: 50px;
   position: reletive;
+  padding: 30px 0;
+
+  @media (min-width: 768px) {
+    padding: 50px 0;
+  }
 `;
 
 export const GoodsListItemStyled = styled.li`
-  width: 300px;
-  height: 300px;
+  display: flex;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  font-size: 4px;
 
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 2px solid #1a1a1a;
+  font-weight: bolder;
+
+  background-position: 50% 50%;
+  background-size: cover;
+  @media (min-width: 768px) {
+    font-size: 10px;
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 13px;
+    width: 400px;
+    height: 400px;
+  }
 `;
 
 export const GoodsListItemInfoStyled = styled.div`
@@ -26,9 +48,14 @@ export const GoodsListItemInfoStyled = styled.div`
   height: 25%;
   width: 100%;
   position: absolute;
+
   bottom: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+export const GoodsListItemName = styled.p`
+  width: 90%;
 `;

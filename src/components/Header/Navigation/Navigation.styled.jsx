@@ -9,7 +9,7 @@ export const HeaderNavigation = styled.nav`
 export const StyledNavigationLink = styled(NavLink)`
   color: black;
   font-family: Poppins;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0em;
@@ -21,5 +21,9 @@ export const StyledNavigationLink = styled(NavLink)`
 
   &:hover {
     color: green;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 24px;
   }
 `;

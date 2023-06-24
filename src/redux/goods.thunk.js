@@ -16,8 +16,18 @@ export const addProductAsyncThunk = createAsyncThunk(
   async (product, thunkApi) => {
     try {
       const { data } = await axios.post(`${API_URL}/goods`, product);
-      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
 
+export const deleteProductAsyncThunk = createAsyncThunk(
+  "/deleteProduct",
+  async (id, thunkApi) => {
+    try {
+      const { data } = await axios.delete(`${API_URL}/goods/${id}`);
       return data;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
