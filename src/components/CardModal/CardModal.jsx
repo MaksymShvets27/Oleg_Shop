@@ -11,12 +11,15 @@ import {
   ModalWrapper,
   StyledGrFormClose,
   StyledGrFormDelete,
+  StyledGrFormEdit,
 } from "./CardModal.styled";
 import { useDispatch } from "react-redux";
 import { deleteProductAsyncThunk } from "../../redux/goods.thunk";
+import { useNavigate } from "react-router-dom";
 
 export const CardModal = ({ card, closeModal }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const onClickBackdrop = (e) => {
     if (e.currentTarget === e.target) {
       closeModal();
@@ -56,10 +59,10 @@ export const CardModal = ({ card, closeModal }) => {
               <p>{card.price}грн.</p>
               <h4>Категорія:</h4>
               <p>{card.category}</p>
-              {card.sex && !card.sex === "Без роду" && (
+              {card.sex && (
                 <>
                   <h4>Рід:</h4>
-                  <p>{card.sex}грн.</p>
+                  <p>{card.sex}</p>
                 </>
               )}
               {card.producent && (
@@ -83,6 +86,11 @@ export const CardModal = ({ card, closeModal }) => {
             onClick={() => {
               dispatch(deleteProductAsyncThunk(card.id));
               closeModal();
+            }}
+          />
+          <StyledGrFormEdit
+            onClick={() => {
+              navigate("/admin", { state: card });
             }}
           />
         </CardModalStyled>

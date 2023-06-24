@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { GrFormClose, GrFormTrash } from "react-icons/gr";
+import { GrFormClose, GrFormEdit, GrFormTrash } from "react-icons/gr";
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -151,6 +151,29 @@ export const StyledGrFormDelete = styled(GrFormTrash)`
    @media (min-width: 768px) {
     top: 20px;
   right: 60px;
+  width: 50px;
+  height: 50px;
+  }
+`;
+
+export const StyledGrFormEdit = styled(GrFormEdit)`
+  position: absolute;
+  top: 5px;
+    right: 45px;
+    width: 25px;
+    height: 25px;
+  cursor: pointer;
+  & path {
+    stroke: black;
+  }
+    &:hover path{
+      stroke: green !important;
+    }
+  }
+
+   @media (min-width: 768px) {
+    top: 20px;
+  right: 100px;
   width: 50px;
   height: 50px;
   }

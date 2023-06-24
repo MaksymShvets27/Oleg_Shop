@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import Notiflix, { Notify } from "notiflix";
 import {
   addProductAsyncThunk,
+  changeProductAsyncThunk,
   deleteProductAsyncThunk,
   getGoodsList,
 } from "./goods.thunk";
@@ -46,6 +47,12 @@ export const goodsSlise = createSlice({
         Notify.success(`Product delete!`);
       })
       .addCase(deleteProductAsyncThunk.rejected, (_) => {
+        Notify.failure("Error");
+      })
+      .addCase(changeProductAsyncThunk.fulfilled, (state, action) => {
+        Notify.success(`Product info change!`);
+      })
+      .addCase(changeProductAsyncThunk.rejected, (_) => {
         Notify.failure("Error");
       }),
 });

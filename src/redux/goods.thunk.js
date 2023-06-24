@@ -34,3 +34,19 @@ export const deleteProductAsyncThunk = createAsyncThunk(
     }
   }
 );
+
+export const changeProductAsyncThunk = createAsyncThunk(
+  "/changeProduct",
+  async (product, thunkApi) => {
+    try {
+      console.log(product);
+      const { data } = await axios.put(
+        `${API_URL}/goods/${product.id}`,
+        product
+      );
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
