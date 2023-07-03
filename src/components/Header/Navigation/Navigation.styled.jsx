@@ -9,7 +9,7 @@ export const HeaderNavigation = styled.nav`
 export const StyledNavigationLink = styled(NavLink)`
   color: black;
   font-family: Poppins;
-  font-size: 16px;
+  font-size: 10px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0em;
