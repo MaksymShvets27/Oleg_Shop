@@ -89,7 +89,10 @@ Error generating stack: `+o.message+`
   padding: 0px 16px;
 `,wx=fe.nav`
   display: flex;
-  gap: 45px;
+  gap: 15px;
+  @media (min-width: 768px) {
+    gap: 45px;
+  }
 `,kx=fe(yv)`
   color: black;
   font-family: Poppins;
@@ -142,18 +145,19 @@ Error generating stack: `+o.message+`
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   position: reletive;
   padding: 30px 0;
 
   @media (min-width: 768px) {
     padding: 50px 0;
+    gap: 30px;
   }
 `,Eh=fe.li`
   display: flex;
   justify-content: center;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   font-size: 4px;
 
   position: relative;
@@ -342,8 +346,12 @@ Error generating stack: `+o.message+`
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   position: reletive;
+
+  @media (min-width: 768px) {
+    gap: 30px;
+  }
 `,x2=fe(Rh)`
   font-size: 10px;
   display: flex;
