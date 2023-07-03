@@ -3,7 +3,10 @@ import { NavLink } from "react-router-dom";
 
 export const HeaderNavigation = styled.nav`
   display: flex;
-  gap: 45px;
+  gap: 15px;
+  @media (min-width: 768px) {
+    gap: 45px;
+  }
 `;
 
 export const StyledNavigationLink = styled(NavLink)`

@@ -6,20 +6,21 @@ export const GoodsListStyled = styled.ul`
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   position: reletive;
   padding: 30px 0;
 
   @media (min-width: 768px) {
     padding: 50px 0;
+    gap: 30px;
   }
 `;
 
 export const GoodsListItemStyled = styled.li`
   display: flex;
   justify-content: center;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   font-size: 4px;
 
   position: relative;

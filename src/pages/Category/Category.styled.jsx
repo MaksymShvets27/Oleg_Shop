@@ -37,8 +37,12 @@ export const CategoryItemGoodsList = styled.ul`
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   position: reletive;
+
+  @media (min-width: 768px) {
+    gap: 30px;
+  }
 `;
 
 export const CategoryItemButtonMore = styled(AdminFormSubmit)`
