@@ -82,7 +82,7 @@ export const CardModalInfo = styled.div`
   gap: 5px;
 
   @media (min-width: 768px) {
-    padding: 50px;
+    padding: 30px;
   }
 `;
 
@@ -126,8 +126,8 @@ export const StyledGrFormClose = styled(GrFormClose)`
   }
 
    @media (min-width: 768px) {
-    top: 20px;
-  right: 20px;
+    top: 10px;
+  right: 10px;
   width: 50px;
   height: 50px;
   }
@@ -149,8 +149,8 @@ export const StyledGrFormDelete = styled(GrFormTrash)`
   }
 
    @media (min-width: 768px) {
-    top: 20px;
-  right: 60px;
+    top: 10px;
+  right: 50px;
   width: 50px;
   height: 50px;
   }
@@ -172,9 +172,19 @@ export const StyledGrFormEdit = styled(GrFormEdit)`
   }
 
    @media (min-width: 768px) {
-    top: 20px;
-  right: 100px;
+    top: 10px;
+  right: 90px;
   width: 50px;
   height: 50px;
+  }
+`;
+
+export const CardModalOtherInfo = styled.p`
+  font-size: 6px;
+  @media (min-width: 768px) {
+    font-size: 9px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 15px;
   }
 `;

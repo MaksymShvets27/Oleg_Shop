@@ -37,7 +37,7 @@ export const GoodsListItemStyled = styled.li`
     border-radius: 20px;
   }
   @media (min-width: 1440px) {
-    font-size: 13px;
+    font-size: 15px;
     width: 400px;
     height: 400px;
   }

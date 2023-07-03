@@ -5,6 +5,7 @@ import {
   CardModalInfo,
   CardModalLeftDiv,
   CardModalMainDiv,
+  CardModalOtherInfo,
   CardModalStyled,
   CardModalTitle,
   ModalOverlay,
@@ -55,32 +56,51 @@ export const CardModal = ({ card, closeModal }) => {
             </CardModalLeftDiv>
             <CardModalInfo>
               <CardModalTitle>{card.name}</CardModalTitle>
-              <h4>Ціна:</h4>
-              <p>{card.price}грн.</p>
-              <h4>Категорія:</h4>
-              <p>{card.category}</p>
+              <>
+                <p>
+                  <span style={{ fontWeight: "bolder" }}>Ціна: </span>
+                  {card.price} грн.
+                </p>
+              </>
+
+              <>
+                <p>
+                  <span style={{ fontWeight: "bolder" }}>Категорія: </span>
+                  {card.category}
+                </p>
+              </>
               {card.sex && (
                 <>
-                  <h4>Рід:</h4>
-                  <p>{card.sex}</p>
+                  <p>
+                    <span style={{ fontWeight: "bolder" }}>Рід: </span>
+                    {card.sex}
+                  </p>
                 </>
               )}
               {card.producent && (
                 <>
-                  <h4>Виробник:</h4>
-                  <p>{card.producent}</p>
+                  <p>
+                    <span style={{ fontWeight: "bolder" }}>Виробник: </span>
+                    {card.producent}
+                  </p>
                 </>
               )}
               {card.size && (
                 <>
-                  <h4>Розмір:</h4>
-                  <p>{card.size}</p>
+                  <p>
+                    <span style={{ fontWeight: "bolder" }}>Розмір: </span>
+                    {card.size}
+                  </p>
                 </>
               )}
+              <div>
+                <span style={{ fontWeight: "bolder" }}>
+                  Додаткова інформація:
+                </span>
+                <CardModalOtherInfo>{card.otherInfo}</CardModalOtherInfo>
+              </div>
             </CardModalInfo>
           </CardModalMainDiv>
-          <h4>Додаткова інформація:</h4>
-          <p>{card.otherInfo}</p>
           <StyledGrFormClose onClick={() => closeModal()} />
           <StyledGrFormDelete
             onClick={() => {

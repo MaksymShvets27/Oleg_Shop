@@ -17,7 +17,6 @@ import { useLocation } from "react-router-dom";
 
 export const AdminPage = () => {
   const location = useLocation();
-  console.log(location.state);
   const state = location.state;
   const dispatch = useDispatch();
 
