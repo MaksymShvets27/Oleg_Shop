@@ -7,6 +7,7 @@ export const CategoryGoodsList = styled(GoodsListStyled)`
 `;
 
 export const CategoryGoodsListTitle = styled.h4`
+  cursor: default;
   @media (min-width: 768px) {
     font-size: 30px;
   }

@@ -57,8 +57,6 @@ export const AdminFormInput = styled.input`
   line-height: 21px;
   letter-spacing: 0px;
 
-  outline: none;
-
   border: 2px solid #1a1a1a;
   &:hover {
     border-color: green;

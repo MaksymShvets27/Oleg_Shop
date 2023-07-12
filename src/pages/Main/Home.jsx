@@ -9,6 +9,7 @@ import {
   GoodsListStyled,
 } from "./Main.styed";
 import { CardModal } from "../../components/CardModal/CardModal";
+import { nanoid } from "nanoid";
 
 export const MainPage = () => {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export const MainPage = () => {
             return (
               <>
                 <GoodsListItemStyled
-                  key={index}
+                  key={nanoid()}
                   onClick={() => handleOpenModal(item)}
                   style={{
                     backgroundImage: `url(${item.image})`,
