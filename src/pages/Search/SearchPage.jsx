@@ -49,16 +49,23 @@ export const SearchPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    let newGoodsArray = goods.filter(
-      (item) =>
-        filter &&
-        item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) &&
+    if (filter.length > 0) {
+      let newGoodsArray = goods.filter(
+        (item) =>
+          item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) &&
+          item.category
+            .toLocaleLowerCase()
+            .includes(categorySelect.toLocaleLowerCase())
+      );
+      setFiltredGoods(newGoodsArray);
+    } else {
+      let newGoodsArray = goods.filter((item) =>
         item.category
           .toLocaleLowerCase()
           .includes(categorySelect.toLocaleLowerCase())
-    );
-
-    setFiltredGoods(newGoodsArray);
+      );
+      setFiltredGoods(newGoodsArray);
+    }
   }, [filter, categorySelect]);
 
   return (
@@ -78,6 +85,13 @@ export const SearchPage = () => {
           console.log(categorySelect);
         }}
       >
+        <AdminFormOption
+          key={nanoid()}
+          value={``}
+          selected={(!(state && state.category) && "selected") || null}
+        >
+          Без категорії
+        </AdminFormOption>
         {categoryList.map((category, index) =>
           category.category ? (
             <optgroup label={`${category.name}`} key={nanoid()}>
