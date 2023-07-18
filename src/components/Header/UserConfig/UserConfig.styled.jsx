@@ -1,22 +1,14 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
-export const HeaderNavigation = styled.nav`
-  display: flex;
-  gap: 15px;
-  @media (min-width: 768px) {
-    gap: 45px;
-  }
-`;
-
-export const StyledNavigationLink = styled(NavLink)`
-  color: black;
+export const UserConfigStr = styled.p`
+ color: black;
   font-family: Poppins;
   font-size: 15px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
+  cursor: pointer;
 
   &.active {
     color: green;
@@ -30,6 +22,4 @@ export const StyledNavigationLink = styled(NavLink)`
     font-size: 24px;
   }
   @media (min-width: 1440px) {
-    font-size: 38px;
-  }
-`;
+    font-size: 38px;`;
