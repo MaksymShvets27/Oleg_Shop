@@ -26,6 +26,9 @@ export const SearchPageInput = styled.input`
   padding: 5px;
   color: black;
 
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+
   &:hover {
     border-color: green;
   }
@@ -45,6 +48,9 @@ export const SearchPageSelect = styled(AdminFormSelect)`
   border-radius: 8px;
   padding: 5px;
   color: black;
+
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   @media (min-width: 768px) {
     width: 340px;

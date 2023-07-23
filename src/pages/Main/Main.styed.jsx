@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const GoodsListStyled = styled.ul`
   display: flex;
   align-content: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
@@ -32,6 +32,9 @@ export const GoodsListItemStyled = styled.li`
 
   background-position: 50% 50%;
   background-size: cover;
+
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   &:hover {
     border-color: green;

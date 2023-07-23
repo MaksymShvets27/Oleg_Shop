@@ -35,7 +35,7 @@ export const CategoryGoodsListItem = styled.li`
 export const CategoryItemGoodsList = styled.ul`
   display: flex;
   align-content: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;

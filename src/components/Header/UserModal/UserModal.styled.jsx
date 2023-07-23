@@ -55,7 +55,7 @@ export const UserModalForm = styled.form`
 
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 
   font-family: Poppins;
   font-size: 15px;
@@ -67,13 +67,25 @@ export const UserModalForm = styled.form`
     font-size: 24px;
   }
   @media (min-width: 768px) {
-    font-size: 42px;
+    font-size: 38px;
   }
 `;
-export const UserModalTitle = styled.h3``;
+export const UserModalTitle = styled.h3`
+  font-family: Poppins;
+  font-size: 15px;
+  line-height: 21px;
+  letter-spacing: 0px;
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 38px;
+  }
+`;
 export const UserModalInput = styled.input`
   max-height: 60px;
-  padding: 20px 22px;
+  padding: 10px 10px;
   border-radius: 10px;
   background: #f9f9f9;
   color: #1a1a1a;
@@ -95,18 +107,25 @@ export const UserModalInput = styled.input`
   @media (min-width: 768px) {
     font-size: 24px;
   }
-  @media (min-width: 768px) {
-    font-size: 42px;
+  @media (min-width: 1440px) {
+    font-size: 38px;
   }
 `;
 
 export const UserModalBtn = styled.button`
   width: 100%;
+  font-size: 15px;
+
   &.active {
     background: green;
   }
-
   &:hover {
     background: green;
+  }
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 38px;
   }
 `;

@@ -5,7 +5,7 @@ export const Logo = () => {
   const navigate = useNavigate();
   return (
     <LogoIcon
-      src={"/public/MS_SHOP_LOGO.jpg"}
+      src={"/src/components/Header/Logo/MS_SHOP_LOGO.jpg"}
       alt="Logo"
       onClick={() => {
         navigate("/");

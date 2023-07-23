@@ -10,16 +10,26 @@ export const UserConfigStr = styled.p`
   text-align: left;
   cursor: pointer;
 
-  &.active {
-    color: green;
-  }
+  padding: 10px 10px;
+  border: 2px solid black;
+  border-radius: 20px 10px;
+  
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   &:hover {
     color: green;
+    border-color: green;
   }
 
   @media (min-width: 768px) {
     font-size: 24px;
   }
   @media (min-width: 1440px) {
+    padding: 15px 15px;
+
     font-size: 38px;`;
+
+export const UserConfigDiv = styled.div`
+  display: flex;
+  gap: 15px;
+`;

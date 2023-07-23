@@ -18,7 +18,7 @@ export const HeaderContainer = styled.div`
   flex-direction: column;
   margin-top: 18px;
   padding: 0px 16px;
-
+  gap: 20px;
   @media (min-width: 768px) {
     flex-direction: row;
   }
