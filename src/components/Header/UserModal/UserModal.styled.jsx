@@ -48,7 +48,7 @@ export const UserModalStyled = styled.div`
   }
 `;
 
-export const UserModalForm = styled.form`
+export const UserModalForm = styled.div`
   padding: 20px 22px;
   background: #f9f9f9;
   color: #1a1a1a;
