@@ -104,7 +104,7 @@ Error generating stack: `+o.message+`
   background-position: 50% 50%;
   background-size: cover;
   cursor: pointer;
-  background-image: url("/src/components/Header/Logo/MS_SHOP_LOGO.jpg");
+  background-image: url("MS_SHOP_LOGO.jpg");
   @media (min-width: 768px) {
     width: 75px;
     height: 75px;
