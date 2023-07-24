@@ -94,29 +94,37 @@ Error generating stack: `+o.message+`
   @media (min-width: 768px) {
     flex-direction: row;
   }
-`,Nx=Y.img`
+`,Nx=Y.div`
   width: 50px;
-  heigth: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
+  background-position: 50% 50%;
+  background-size: cover;
   cursor: pointer;
-
+  background-image: url("/src/components/Header/Logo/MS_SHOP_LOGO.jpg");
   @media (min-width: 768px) {
     width: 75px;
-    heigth: 75px;
+    height: 75px;
   }
-`,Px=()=>{const e=Kr();return b.jsx(Nx,{src:"/src/components/Header/Logo/MS_SHOP_LOGO.jpg",alt:"Logo",onClick:()=>{e("/")}})},Rx=Y.nav`
+`,Px=()=>{const e=Kr();return b.jsx(Nx,{onClick:()=>{e("/")}})},Rx=Y.nav`
   display: flex;
-  gap: 15px;
+  gap: 5px;
+  @media (min-width: 768px) {
+    gap: 15px;
+  }
 `,Ox=Y(Sv)`
   color: black;
   font-family: Poppins;
-  font-size: 15px;
+  font-size: 10px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
 
-  padding: 10px 10px;
+  padding: 5px 10px;
   border: 2px solid black;
   border-radius: 20px 10px;
 
@@ -135,6 +143,7 @@ Error generating stack: `+o.message+`
 
   @media (min-width: 768px) {
     font-size: 24px;
+    padding: 10px 10px;
   }
   @media (min-width: 1440px) {
     font-size: 38px;
@@ -143,14 +152,14 @@ Error generating stack: `+o.message+`
 `,zx=[{to:"/",title:"Головна"},{to:"/category",title:"Категорії"},{to:"/search",title:"Пошук"},{to:"/Admin",title:"Адмін"}],Ax=()=>b.jsx(Rx,{children:zx.map((e,t)=>b.jsx(Ox,{to:`${e.to}`,children:e.title},t))}),Fd=Y.p`
  color: black;
   font-family: Poppins;
-  font-size: 15px;
+  font-size: 10px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
   cursor: pointer;
 
-  padding: 10px 10px;
+  padding: 5px 10px;
   border: 2px solid black;
   border-radius: 20px 10px;
   
@@ -163,13 +172,17 @@ Error generating stack: `+o.message+`
 
   @media (min-width: 768px) {
     font-size: 24px;
+    padding: 10px 10px;
   }
   @media (min-width: 1440px) {
     padding: 15px 15px;
 
     font-size: 38px;`,Lx=Y.div`
   display: flex;
-  gap: 15px;
+  gap: 5px;
+  @media (min-width: 768px) {
+    gap: 15px;
+  }
 `;var qm={exports:{}},Jm={};/**
  * @license React
  * use-sync-external-store-shim.production.min.js
@@ -321,13 +334,13 @@ Error generating stack: `+o.message+`
   justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  row-gap: 10px;
   position: reletive;
   padding: 10px 0;
 
   @media (min-width: 768px) {
     padding: 30px 0;
-    gap: 30px;
+    row-gap: 30px;
   }
 `,Jc=Y.li`
   display: flex;
@@ -528,8 +541,7 @@ Error generating stack: `+o.message+`
   }
 `,L2=Y.ul`
   display: flex;
-  align-content: center;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
@@ -544,6 +556,9 @@ Error generating stack: `+o.message+`
   justify-content: center;
   width: 100px;
   padding: 5px;
+
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   @media (min-width: 768px) {
     width: 240px;
