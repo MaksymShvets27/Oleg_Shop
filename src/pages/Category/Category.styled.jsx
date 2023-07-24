@@ -34,8 +34,7 @@ export const CategoryGoodsListItem = styled.li`
 
 export const CategoryItemGoodsList = styled.ul`
   display: flex;
-  align-content: center;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px;
@@ -52,6 +51,9 @@ export const CategoryItemButtonMore = styled(AdminFormSubmit)`
   justify-content: center;
   width: 100px;
   padding: 5px;
+
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   @media (min-width: 768px) {
     width: 240px;

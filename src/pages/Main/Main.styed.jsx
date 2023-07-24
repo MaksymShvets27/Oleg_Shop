@@ -7,13 +7,13 @@ export const GoodsListStyled = styled.ul`
   justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  row-gap: 10px;
   position: reletive;
   padding: 10px 0;
 
   @media (min-width: 768px) {
     padding: 30px 0;
-    gap: 30px;
+    row-gap: 30px;
   }
 `;
 

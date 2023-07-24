@@ -3,14 +3,14 @@ import styled from "styled-components";
 export const UserConfigStr = styled.p`
  color: black;
   font-family: Poppins;
-  font-size: 15px;
+  font-size: 10px;
   font-weight: 600;
   line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
   cursor: pointer;
 
-  padding: 10px 10px;
+  padding: 5px 10px;
   border: 2px solid black;
   border-radius: 20px 10px;
   
@@ -23,6 +23,7 @@ export const UserConfigStr = styled.p`
 
   @media (min-width: 768px) {
     font-size: 24px;
+    padding: 10px 10px;
   }
   @media (min-width: 1440px) {
     padding: 15px 15px;
@@ -31,5 +32,8 @@ export const UserConfigStr = styled.p`
 
 export const UserConfigDiv = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 5px;
+  @media (min-width: 768px) {
+    gap: 15px;
+  }
 `;
