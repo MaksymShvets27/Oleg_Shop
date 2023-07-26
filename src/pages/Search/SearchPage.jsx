@@ -19,13 +19,15 @@ import { getGoodsList } from "../../redux/goods.thunk";
 import { AdminFormOption, AdminFormSelect } from "../Admin/Admin.styled";
 import { categoryList } from "../../constants/SelectCategory/SelectCategory";
 import { nanoid } from "nanoid";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../../firebase/config";
 
 export const SearchPage = () => {
   const location = useLocation();
   const state = location.state;
 
-  const dispatch = useDispatch();
-  const goods = useSelector(selectGoods);
+  const [goods, setGoods] = useState([]);
+
   const [filtredGoods, setFiltredGoods] = useState(goods);
   const [openModal, setOpenModal] = useState(false);
   const [card, setCard] = useState();
@@ -44,9 +46,15 @@ export const SearchPage = () => {
     setOpenModal(false);
   };
 
+  const getAllPost = async () => {
+    onSnapshot(collection(db, "goods"), (data) => {
+      setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
   useEffect(() => {
-    dispatch(getGoodsList());
-  }, [dispatch]);
+    getAllPost();
+  }, []);
 
   useEffect(() => {
     if (filter.length > 0) {

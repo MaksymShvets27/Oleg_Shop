@@ -16,10 +16,12 @@ import {
 } from "./Category.styled";
 import { CardModal } from "../../components/CardModal/CardModal";
 import { useNavigate } from "react-router-dom";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../../firebase/config";
 
 export const CategoryPage = () => {
-  const goods = useSelector(selectGoods);
-  const dispatch = useDispatch();
+  const [goods, setGoods] = useState([]);
+
   const categoryPageList = [];
   const navigate = useNavigate();
 
@@ -35,9 +37,15 @@ export const CategoryPage = () => {
     setOpenModal(false);
   };
 
+  const getAllPost = async () => {
+    onSnapshot(collection(db, "goods"), (data) => {
+      setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
   useEffect(() => {
-    dispatch(getGoodsList());
-  }, [dispatch]);
+    getAllPost();
+  }, []);
 
   goods.map((good) => {
     if (!categoryPageList.includes(good.category)) {

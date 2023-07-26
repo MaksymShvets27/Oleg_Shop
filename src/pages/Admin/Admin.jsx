@@ -8,26 +8,37 @@ import {
   AdminFormTextArea,
 } from "./Admin.styled";
 import { useEffect, useState } from "react";
-import {
-  addProductAsyncThunk,
-  changeProductAsyncThunk,
-} from "../../redux/goods.thunk";
 import { useLocation } from "react-router-dom";
 import { categoryList } from "../../constants/SelectCategory/SelectCategory";
 import { nanoid } from "nanoid";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { db } from "../../../firebase/config";
 
 export const AdminPage = () => {
   const location = useLocation();
   const state = location.state;
   const dispatch = useDispatch();
 
-  const id = state ? state.id : "";
   const [image, setImg] = useState(state ? state.image : "");
   const [name, setName] = useState(state ? state.name : "");
   const [price, setPrice] = useState(state ? state.price : "");
   const [producent, setProducent] = useState(state ? state.producent : "");
   const [size, setSize] = useState(state ? state.size : "");
   const [otherInfo, setOtherInfo] = useState(state ? state.otherInfo : "");
+
+  const addGood = async (data) => {
+    try {
+      if (state) {
+        await setDoc(doc(db, "goods", `${data.id}`), data);
+        alert("Change success");
+      } else {
+        await addDoc(collection(db, "goods"), data);
+        alert("Add success");
+      }
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
 
   useEffect(() => {
     const form = document.getElementById("form");
@@ -36,7 +47,6 @@ export const AdminPage = () => {
       const { image, name, price, sex, producent, category, size, otherInfo } =
         this.elements;
       const data = {
-        id: id,
         image: image.value,
         name: name.value,
         price: price.value,
@@ -45,12 +55,9 @@ export const AdminPage = () => {
         category: category.value,
         size: size.value || "",
         otherInfo: otherInfo.value || "",
+        createTime: new Date(),
       };
-      if (state) {
-        dispatch(changeProductAsyncThunk(data));
-      } else {
-        dispatch(addProductAsyncThunk(data));
-      }
+      addGood(data);
       this.reset();
     });
   }, [dispatch]);

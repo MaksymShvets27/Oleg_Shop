@@ -10,10 +10,11 @@ import {
 } from "./Main.styed";
 import { CardModal } from "../../components/CardModal/CardModal";
 import { nanoid } from "nanoid";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../../../firebase/config";
 
 export const MainPage = () => {
-  const dispatch = useDispatch();
-  const goods = useSelector(selectGoods);
+  const [goods, setGoods] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [card, setCard] = useState();
 
@@ -26,9 +27,15 @@ export const MainPage = () => {
     setOpenModal(false);
   };
 
+  const getAllPost = async () => {
+    onSnapshot(collection(db, "goods"), (data) => {
+      setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  };
+
   useEffect(() => {
-    dispatch(getGoodsList());
-  }, [dispatch]);
+    getAllPost();
+  }, []);
   return (
     <>
       <GoodsListStyled id="card">
@@ -37,7 +44,7 @@ export const MainPage = () => {
             return (
               <>
                 <GoodsListItemStyled
-                  key={nanoid()}
+                  key={item.id}
                   onClick={() => handleOpenModal(item)}
                   style={{
                     backgroundImage: `url(${item.image})`,

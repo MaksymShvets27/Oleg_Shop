@@ -17,6 +17,8 @@ import {
 import { useDispatch } from "react-redux";
 import { deleteProductAsyncThunk } from "../../redux/goods.thunk";
 import { useNavigate } from "react-router-dom";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../../firebase/config";
 
 export const CardModal = ({ card, closeModal }) => {
   const dispatch = useDispatch();
@@ -31,6 +33,11 @@ export const CardModal = ({ card, closeModal }) => {
     if ((e.charCode || e.keyCode) === 27) {
       closeModal();
     }
+  };
+
+  const deleteGood = async () => {
+    await deleteDoc(doc(db, "goods", `${card.id}`));
+    closeModal();
   };
 
   useEffect(() => {
@@ -104,8 +111,7 @@ export const CardModal = ({ card, closeModal }) => {
           <StyledGrFormClose onClick={() => closeModal()} />
           <StyledGrFormDelete
             onClick={() => {
-              dispatch(deleteProductAsyncThunk(card.id));
-              closeModal();
+              deleteGood();
             }}
           />
           <StyledGrFormEdit
