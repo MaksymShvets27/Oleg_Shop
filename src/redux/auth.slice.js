@@ -5,6 +5,7 @@ const state = {
   userName: null,
   isLogIn: false,
   role: "user",
+  cashList: [],
 };
 
 export const authSlice = createSlice({
@@ -25,6 +26,14 @@ export const authSlice = createSlice({
     adminRole: (state, { payload }) => ({
       ...state,
       role: "admin",
+    }),
+    addGoodToCashList: (state, { payload }) => ({
+      ...state,
+      cashList: [...state.cashList, payload],
+    }),
+    removeGoodFromCashList: (state, { payload }) => ({
+      ...state,
+      cashList: payload,
     }),
   },
 });

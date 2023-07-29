@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectGoods } from "../../redux/selectors";
-import { getGoodsList } from "../../redux/goods.thunk";
 import {
   GoodsListItemInfoStyled,
   GoodsListItemName,

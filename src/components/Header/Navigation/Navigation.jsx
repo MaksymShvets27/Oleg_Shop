@@ -19,7 +19,7 @@ export const Navigation = () => {
         </StyledNavigationLink>
       ))}
       {user.role === "admin" && (
-        <StyledNavigationLink key="admin" to={`/Admin`}>
+        <StyledNavigationLink key="admin" to={`/admin`}>
           Адмін
         </StyledNavigationLink>
       )}

@@ -16,6 +16,9 @@ export const UserConfigStr = styled.p`
   
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
+  transition: border-color 0.25s;
+  transition: color 0.25s;
+  
   &:hover {
     color: green;
     border-color: green;

@@ -36,7 +36,7 @@ const authSignInUser =
       .then((userCredential) => {
         const { uid, displayName, email } = auth.currentUser;
         dispatch(updateUserProfile({ userId: uid, userName: displayName }));
-        if (email === "kushpita.oleh@gmail.com") {
+        if (email === "msshopua@gmail.com") {
           dispatch(adminRole());
         }
       })

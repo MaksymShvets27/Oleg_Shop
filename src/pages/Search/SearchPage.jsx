@@ -11,11 +11,8 @@ import {
   GoodsListItemStyled,
   GoodsListStyled,
 } from "../Main/Main.styed";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { CardModal } from "../../components/CardModal/CardModal";
-import { selectGoods } from "../../redux/selectors";
-import { getGoodsList } from "../../redux/goods.thunk";
 import { AdminFormOption, AdminFormSelect } from "../Admin/Admin.styled";
 import { categoryList } from "../../constants/SelectCategory/SelectCategory";
 import { nanoid } from "nanoid";

@@ -90,6 +90,7 @@ export const AdminPage = () => {
       />
       <p>Категорія</p>
       <AdminFormSelect id="category" name="category">
+        <AdminFormOption value="">Вкажіть категорію</AdminFormOption>
         {categoryList.map((category, index) =>
           category.category ? (
             <optgroup label={`${category.name}`} key={nanoid()}>
@@ -127,6 +128,7 @@ export const AdminPage = () => {
 
       <p>Рід</p>
       <AdminFormSelect id="sex" name="sex" placeholder="Вибрати рід">
+        <AdminFormOption value="">Без роду</AdminFormOption>
         <AdminFormOption
           value="Чоловік"
           selected={(state && state.sex === "Чоловік" && "selected") || null}

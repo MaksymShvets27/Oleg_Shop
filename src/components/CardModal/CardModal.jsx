@@ -14,15 +14,18 @@ import {
   StyledGrFormDelete,
   StyledGrFormEdit,
 } from "./CardModal.styled";
-import { useDispatch } from "react-redux";
-import { deleteProductAsyncThunk } from "../../redux/goods.thunk";
 import { useNavigate } from "react-router-dom";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { selectUser } from "../../redux/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { cashListAddGood } from "../../redux/cashList.thunk";
 
 export const CardModal = ({ card, closeModal }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
   const onClickBackdrop = (e) => {
     if (e.currentTarget === e.target) {
       closeModal();
@@ -38,6 +41,10 @@ export const CardModal = ({ card, closeModal }) => {
   const deleteGood = async () => {
     await deleteDoc(doc(db, "goods", `${card.id}`));
     closeModal();
+  };
+
+  const addToCashList = () => {
+    dispatch(cashListAddGood(card));
   };
 
   useEffect(() => {
@@ -58,8 +65,12 @@ export const CardModal = ({ card, closeModal }) => {
                   backgroundImage: `url(${card.image})`,
                 }}
               />
-              <CardModalBtn>Добавити до покупок</CardModalBtn>
-              <CardModalBtn>Добавити до обранного</CardModalBtn>
+              <CardModalBtn onClick={addToCashList}>
+                Добавити до покупок
+              </CardModalBtn>
+              {user.isLogIn && (
+                <CardModalBtn>Добавити до обранного</CardModalBtn>
+              )}
             </CardModalLeftDiv>
             <CardModalInfo>
               <CardModalTitle>{card.name}</CardModalTitle>
@@ -109,16 +120,20 @@ export const CardModal = ({ card, closeModal }) => {
             </CardModalInfo>
           </CardModalMainDiv>
           <StyledGrFormClose onClick={() => closeModal()} />
-          <StyledGrFormDelete
-            onClick={() => {
-              deleteGood();
-            }}
-          />
-          <StyledGrFormEdit
-            onClick={() => {
-              navigate("/admin", { state: card });
-            }}
-          />
+          {user.role === "admin" && (
+            <>
+              <StyledGrFormDelete
+                onClick={() => {
+                  deleteGood();
+                }}
+              />
+              <StyledGrFormEdit
+                onClick={() => {
+                  navigate("/admin", { state: card });
+                }}
+              />
+            </>
+          )}
         </CardModalStyled>
       </ModalWrapper>
     </ModalOverlay>

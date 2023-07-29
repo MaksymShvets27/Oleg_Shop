@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectGoods } from "../../redux/selectors";
-import { getGoodsList } from "../../redux/goods.thunk";
 import {
   GoodsListItemInfoStyled,
   GoodsListItemName,
@@ -9,7 +6,6 @@ import {
   GoodsListStyled,
 } from "./Main.styed";
 import { CardModal } from "../../components/CardModal/CardModal";
-import { nanoid } from "nanoid";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 
@@ -27,7 +23,7 @@ export const MainPage = () => {
     setOpenModal(false);
   };
 
-  const getAllPost = async () => {
+  const getAllPost = () => {
     onSnapshot(collection(db, "goods"), (data) => {
       setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
