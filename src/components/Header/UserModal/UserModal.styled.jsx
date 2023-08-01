@@ -129,3 +129,20 @@ export const UserModalBtn = styled.button`
     font-size: 38px;
   }
 `;
+
+export const ModalUserAlert = styled.div`
+  width: 80%;
+  display: flex;
+  font-size: 10px;
+  color: red;
+
+  align-self: center;
+  @media (min-width: 768px) {
+    width: 50%;
+    font-size: 18px;
+  }
+  @media (min-width: 1440px) {
+    width: 50%;
+    font-size: 32px;
+  }
+`;

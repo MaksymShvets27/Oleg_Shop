@@ -23,7 +23,7 @@ export const UserConfig = () => {
               setOpenUserModal(true);
             }}
           >
-            Користувач
+            Меню користувача
           </UserConfigStr>
         </>
       ) : (

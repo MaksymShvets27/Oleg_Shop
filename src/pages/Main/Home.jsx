@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   GoodsListItemInfoStyled,
+  GoodsListItemIsNew,
   GoodsListItemName,
   GoodsListItemStyled,
   GoodsListStyled,
@@ -13,6 +14,8 @@ export const MainPage = () => {
   const [goods, setGoods] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [card, setCard] = useState();
+
+  let date = new Date().getTime() / 1000;
 
   const handleOpenModal = (item) => {
     setCard(item);
@@ -27,6 +30,7 @@ export const MainPage = () => {
     onSnapshot(collection(db, "goods"), (data) => {
       setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
+    setGoods(goods?.sort((a, b) => (a.createTime > b.createTime ? -1 : 1)));
   };
 
   useEffect(() => {
@@ -46,6 +50,9 @@ export const MainPage = () => {
                     backgroundImage: `url(${item.image})`,
                   }}
                 >
+                  {date - item.createTime.seconds < 259200 && (
+                    <GoodsListItemIsNew>Новинка!</GoodsListItemIsNew>
+                  )}
                   <GoodsListItemInfoStyled>
                     <GoodsListItemName>{item.name}</GoodsListItemName>
                     <p>{item.price} грн.</p>

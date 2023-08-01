@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const state = {
   userId: null,
   userName: null,
+  email: null,
   isLogIn: false,
   role: "user",
   cashList: [],
@@ -16,7 +17,8 @@ export const authSlice = createSlice({
       ...state,
       userId: payload.userId,
       userName: payload.userName,
-      isLogIn: true,
+      email: payload.email,
+      isLogIn: payload.isLogIn ? true : false,
     }),
     authStateChange: (state, { payload }) => ({
       ...state,
@@ -34,6 +36,10 @@ export const authSlice = createSlice({
     removeGoodFromCashList: (state, { payload }) => ({
       ...state,
       cashList: payload,
+    }),
+    clearCashList: (state, { payload }) => ({
+      ...state,
+      cashList: [],
     }),
   },
 });

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const GoodsListStyled = styled.ul`
-  min-width: 260px;
+export const OrderListStyled = styled.ul`
+  width: 100%;
   display: flex;
   align-content: center;
   justify-content: space-around;
@@ -17,13 +17,15 @@ export const GoodsListStyled = styled.ul`
   }
 `;
 
-export const GoodsListItemStyled = styled.li`
+export const OrderListItem = styled.li`
+  width: 100%;
   display: flex;
   justify-content: center;
-  width: 110px;
   min-height: 110px;
   font-size: 6px;
   font-weight: bolder;
+  flex-direction: column;
+  padding: 5px;
 
   cursor: pointer;
   position: relative;
@@ -44,43 +46,9 @@ export const GoodsListItemStyled = styled.li`
     border-color: green;
   }
   @media (min-width: 768px) {
+    width: 40%;
     font-size: 13px;
-    width: 250px;
     height: 250px;
     border-radius: 20px;
   }
-  @media (min-width: 1440px) {
-    font-size: 23px;
-    width: 400px;
-    height: 400px;
-  }
-`;
-
-export const GoodsListItemInfoStyled = styled.div`
-  background: #ffffff9c;
-  min-height: 25%;
-  width: 100%;
-  position: absolute;
-
-  bottom: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-export const GoodsListItemName = styled.p`
-  width: 90%;
-`;
-
-export const GoodsListItemIsNew = styled.div`
-  width: 50%;
-  top: 10%;
-  left: -10%;
-  position: absolute;
-  background: green;
-  display: flex;
-  rotate: -45deg;
-  align-items: center;
-  justify-content: center;
 `;

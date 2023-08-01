@@ -1,6 +1,16 @@
 import styled from "styled-components";
 import { GrFormTrash } from "react-icons/gr";
 
+export const CheckListTitle = styled.h2`
+  font-size: 16px;
+  @media (min-width: 768px) {
+    font-size: 24px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 32px;
+  }
+`;
+
 export const CashListStyled = styled.div`
   display: flex;
   align-content: center;
@@ -10,7 +20,7 @@ export const CashListStyled = styled.div`
   row-gap: 10px;
   position: reletive;
   padding: 10px 0;
-
+  flex-direction: column;
   @media (min-width: 768px) {
     padding: 30px 0;
     row-gap: 30px;
@@ -18,29 +28,30 @@ export const CashListStyled = styled.div`
 `;
 
 export const CashCardImg = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 20%;
+  height: 90%;
   border-radius: 20px;
   border: 2px solid black;
 
   background-position: 50% 50%;
   background-size: cover;
-  @media (min-width: 768px) {
-    width: 220px;
-    height: 220px;
-  }
+
   @media (min-width: 1440px) {
     width: 360px;
     height: 360px;
+  }
+  @media (min-width: 1440px) {
+    width: 90px;
+    height: 90px;
   }
 `;
 
 export const CashListItemStyled = styled.li`
   display: flex;
   justify-content: center;
-  width: 100%;
-  height: 110px;
-  font-size: 12px;
+  width: 90%;
+  height: 50px;
+  font-size: 8px;
   font-weight: bolder;
   justify-content: space-around;
   align-items: center;
@@ -58,13 +69,13 @@ export const CashListItemStyled = styled.li`
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   @media (min-width: 768px) {
-    font-size: 24px;
-    height: 250px;
+    font-size: 12px;
+    width: 50%;
+    height: 100px;
     border-radius: 20px;
   }
   @media (min-width: 1440px) {
-    font-size: 32px;
-    height: 400px;
+    font-size: 20px;
   }
 `;
 
@@ -94,15 +105,15 @@ export const CashCardTrashButton = styled.button`
 `;
 
 export const StyledGrFormDelete = styled(GrFormTrash)`
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   cursor: pointer;
   & path {
     stroke: white;
   }
   @media (min-width: 768px) {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 `;
 
@@ -110,6 +121,7 @@ export const CashListSendButton = styled.button`
   display: flex;
   padding: 10px;
   transition: background 0.25s;
+  font-size: 10px;
 
   &:hover {
     background: green;
@@ -120,8 +132,5 @@ export const CashListSendButton = styled.button`
 
   @media (min-width: 768px) {
     font-size: 24px;
-  }
-  @media (min-width: 768px) {
-    font-size: 42px;
   }
 `;

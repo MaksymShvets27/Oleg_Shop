@@ -150,7 +150,7 @@ export const SearchPage = () => {
             );
           })
         ) : (
-          <NoGoods>Товару не знайдено</NoGoods>
+          <NoGoods>Оберіть категорію чи назву товару</NoGoods>
         )}
       </GoodsListStyled>
       {openModal && <CardModal card={card} closeModal={closeModal} />}

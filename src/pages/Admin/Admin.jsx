@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   AdminForm,
   AdminFormInput,
@@ -8,13 +8,19 @@ import {
   AdminFormTextArea,
 } from "./Admin.styled";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { categoryList } from "../../constants/SelectCategory/SelectCategory";
 import { nanoid } from "nanoid";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { selectUser } from "../../redux/selectors";
+import { OrderListStyled } from "./OrdersList.styled";
+import { OrdersList } from "./OrdersList";
 
 export const AdminPage = () => {
+  const { role } = useSelector(selectUser);
+  const navigation = useNavigate();
+
   const location = useLocation();
   const state = location.state;
   const dispatch = useDispatch();
@@ -62,110 +68,120 @@ export const AdminPage = () => {
     });
   }, [dispatch]);
 
+  useEffect(() => {
+    if (role != "admin") {
+      navigation("/");
+    }
+  });
   return (
-    <AdminForm id="form">
-      <p>Малюнок</p>
-      <AdminFormInput
-        required
-        name="image"
-        placeholder="Додати ссилку на картинку"
-        value={image}
-        onChange={(event) => setImg(event.target.value)}
-      />
-      <p>Назва</p>
-      <AdminFormInput
-        required
-        name="name"
-        placeholder="Додати назву"
-        value={name}
-        onChange={(event) => setName(event.target.value)}
-      />
-      <p>Ціна в гривнях</p>
-      <AdminFormInput
-        required
-        name="price"
-        placeholder="Додати ціну"
-        value={price}
-        onChange={(event) => setPrice(event.target.value)}
-      />
-      <p>Категорія</p>
-      <AdminFormSelect id="category" name="category">
-        <AdminFormOption value="">Вкажіть категорію</AdminFormOption>
-        {categoryList.map((category, index) =>
-          category.category ? (
-            <optgroup label={`${category.name}`} key={nanoid()}>
-              {category.category &&
-                category.category.map((category) => {
-                  return (
-                    <AdminFormOption
-                      key={nanoid()}
-                      value={`${category}`}
-                      selected={
-                        (state && state.category === category && "selected") ||
-                        null
-                      }
-                    >
-                      {category}
-                    </AdminFormOption>
-                  );
-                })}
-            </optgroup>
-          ) : (
-            <AdminFormOption
-              key={nanoid()}
-              value={`${category.name}`}
-              style={{ fontWeight: "bolder" }}
-              selected={
-                (state && state.category === category.name && "selected") ||
-                null
-              }
-            >
-              {category.name}
-            </AdminFormOption>
-          )
-        )}
-      </AdminFormSelect>
+    <>
+      <AdminForm id="form">
+        <p>Малюнок</p>
+        <AdminFormInput
+          required
+          name="image"
+          placeholder="Додати ссилку на картинку"
+          value={image}
+          onChange={(event) => setImg(event.target.value)}
+        />
+        <p>Назва</p>
+        <AdminFormInput
+          required
+          name="name"
+          placeholder="Додати назву"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+        <p>Ціна в гривнях</p>
+        <AdminFormInput
+          required
+          name="price"
+          placeholder="Додати ціну"
+          value={price}
+          onChange={(event) => setPrice(event.target.value)}
+        />
+        <p>Категорія</p>
+        <AdminFormSelect id="category" name="category">
+          <AdminFormOption value="">Вкажіть категорію</AdminFormOption>
+          {categoryList.map((category, index) =>
+            category.category ? (
+              <optgroup label={`${category.name}`} key={nanoid()}>
+                {category.category &&
+                  category.category.map((category) => {
+                    return (
+                      <AdminFormOption
+                        key={nanoid()}
+                        value={`${category}`}
+                        selected={
+                          (state &&
+                            state.category === category &&
+                            "selected") ||
+                          null
+                        }
+                      >
+                        {category}
+                      </AdminFormOption>
+                    );
+                  })}
+              </optgroup>
+            ) : (
+              <AdminFormOption
+                key={nanoid()}
+                value={`${category.name}`}
+                style={{ fontWeight: "bolder" }}
+                selected={
+                  (state && state.category === category.name && "selected") ||
+                  null
+                }
+              >
+                {category.name}
+              </AdminFormOption>
+            )
+          )}
+        </AdminFormSelect>
 
-      <p>Рід</p>
-      <AdminFormSelect id="sex" name="sex" placeholder="Вибрати рід">
-        <AdminFormOption value="">Без роду</AdminFormOption>
-        <AdminFormOption
-          value="Чоловік"
-          selected={(state && state.sex === "Чоловік" && "selected") || null}
-        >
-          Чоловік
-        </AdminFormOption>
-        <AdminFormOption
-          value="Жінка"
-          selected={(state && state.sex === "Жінка" && "selected") || null}
-        >
-          Жінка
-        </AdminFormOption>
-      </AdminFormSelect>
-      <p>Розмір</p>
-      <AdminFormInput
-        name="size"
-        placeholder="Додати розмір"
-        value={size}
-        onChange={(event) => setSize(event.target.value)}
-      />
-      <p>Виробник</p>
-      <AdminFormInput
-        name="producent"
-        placeholder="Додати виробника"
-        value={producent}
-        onChange={(event) => setProducent(event.target.value)}
-      />
-      <p>Додаткова інформація</p>
-      <AdminFormTextArea
-        name="otherInfo"
-        placeholder="Додати додаткову інформацію"
-        value={otherInfo}
-        onChange={(event) => setOtherInfo(event.target.value)}
-      />
-      <AdminFormSubmit>
-        {state ? "Зілити зміни" : "Залити новий товар"}
-      </AdminFormSubmit>
-    </AdminForm>
+        <p>Рід</p>
+        <AdminFormSelect id="sex" name="sex" placeholder="Вибрати рід">
+          <AdminFormOption value="">Без роду</AdminFormOption>
+          <AdminFormOption
+            value="Чоловік"
+            selected={(state && state.sex === "Чоловік" && "selected") || null}
+          >
+            Чоловік
+          </AdminFormOption>
+          <AdminFormOption
+            value="Жінка"
+            selected={(state && state.sex === "Жінка" && "selected") || null}
+          >
+            Жінка
+          </AdminFormOption>
+        </AdminFormSelect>
+        <p>Розмір</p>
+        <AdminFormInput
+          name="size"
+          placeholder="Додати розмір"
+          value={size}
+          onChange={(event) => setSize(event.target.value)}
+        />
+        <p>Виробник</p>
+        <AdminFormInput
+          name="producent"
+          placeholder="Додати виробника"
+          value={producent}
+          onChange={(event) => setProducent(event.target.value)}
+        />
+        <p>Додаткова інформація</p>
+        <AdminFormTextArea
+          name="otherInfo"
+          placeholder="Додати додаткову інформацію"
+          value={otherInfo}
+          onChange={(event) => setOtherInfo(event.target.value)}
+        />
+        <AdminFormSubmit>
+          {state ? "Зілити зміни" : "Залити новий товар"}
+        </AdminFormSubmit>
+      </AdminForm>
+      <OrdersList />
+    </>
   );
 };

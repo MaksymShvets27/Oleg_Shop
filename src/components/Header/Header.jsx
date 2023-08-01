@@ -22,8 +22,12 @@ export const Header = () => {
     <HeaderStyled>
       <HeaderContainer>
         <Logo />
-        <Navigation />
-        <UserConfig />
+        {!(path === "/checkout") && (
+          <>
+            <Navigation />
+            <UserConfig />
+          </>
+        )}
       </HeaderContainer>
       {!(path === "/cashList" || path === "/admin" || path === "/checkout") && (
         <CashListIcon>

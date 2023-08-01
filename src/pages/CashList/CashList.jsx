@@ -9,6 +9,7 @@ import {
   CashListItemStyled,
   CashListSendButton,
   CashListStyled,
+  CheckListTitle,
   StyledGrFormDelete,
 } from "./CashList.styled";
 import { cashListRemoveGood } from "../../redux/cashList.thunk";
@@ -21,6 +22,7 @@ export const CashListPage = () => {
 
   return (
     <CashListStyled>
+      <CheckListTitle>Список товарів</CheckListTitle>
       {cashList.length > 0 ? (
         <>
           {cashList.map((card, index) => {

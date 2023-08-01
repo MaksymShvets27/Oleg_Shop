@@ -8,8 +8,13 @@ import {
 import { auth } from "../../firebase/config";
 import { authSlice } from "./auth.slice";
 
-const { updateUserProfile, authStateChange, authSignOut, adminRole } =
-  authSlice.actions;
+const {
+  updateUserProfile,
+  authStateChange,
+  authSignOut,
+  adminRole,
+  clearCashList,
+} = authSlice.actions;
 
 const authSignUpUser =
   ({ email, password, userName }) =>
@@ -26,7 +31,12 @@ const authSignUpUser =
     });
 
     const { uid, displayName } = auth.currentUser;
-    dispatch(updateUserProfile({ userId: uid, userName: displayName }));
+    dispatch(
+      updateUserProfile({
+        userId: uid,
+        userName: displayName,
+      })
+    );
   };
 
 const authSignInUser =
@@ -35,7 +45,14 @@ const authSignInUser =
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const { uid, displayName, email } = auth.currentUser;
-        dispatch(updateUserProfile({ userId: uid, userName: displayName }));
+        dispatch(
+          updateUserProfile({
+            userId: uid,
+            userName: displayName,
+            isLogIn: true,
+            email,
+          })
+        );
         if (email === "msshopua@gmail.com") {
           dispatch(adminRole());
         }
@@ -72,4 +89,13 @@ const authStateChangeUser = () => async (dispatch, getState) => {
   });
 };
 
-export { authSignInUser, authSignOutUser, authSignUpUser, authStateChangeUser };
+const authClearCashList = () => (dispatch, getState) => {
+  dispatch(clearCashList());
+};
+export {
+  authSignInUser,
+  authSignOutUser,
+  authSignUpUser,
+  authStateChangeUser,
+  authClearCashList,
+};
