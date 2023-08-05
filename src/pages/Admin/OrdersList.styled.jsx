@@ -26,7 +26,7 @@ export const OrderListItem = styled.li`
   font-weight: bolder;
   flex-direction: column;
   padding: 5px;
-
+  gap: 5px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -47,8 +47,8 @@ export const OrderListItem = styled.li`
   }
   @media (min-width: 768px) {
     width: 40%;
-    font-size: 13px;
-    height: 250px;
+    font-size: 10px;
     border-radius: 20px;
+    padding: 20px;
   }
 `;

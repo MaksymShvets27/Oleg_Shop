@@ -48,6 +48,86 @@ export const UserModalStyled = styled.div`
   }
 `;
 
+export const UserModalNav = styled.div`
+  gap: 10px;
+  display: flex;
+  justify-content: space-around;
+  @media (min-width: 768px) {
+    gap: 20px;
+  }
+`;
+
+export const UserModalNavBtn = styled.button`
+  font-size: 7px;
+
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 24px;
+  }
+`;
+
+export const UserModalInfoSubtitle = styled.h4`
+  font-size: 11px;
+  text-align: left;
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 30px;
+  }
+`;
+
+export const UserModalInfoDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+export const UserModalInfoP = styled.p`
+  font-size: 11px;
+  text-align: left;
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 30px;
+  }
+`;
+
+export const UserModalHistoryDiv = styled.div`
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  align-items: center;
+`;
+
+export const UserModalHistoryOrderItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  gap: 5px;
+
+  @media (min-width: 768px) {
+    padding: 5px 0;
+    gap: 5px;
+  }
+  @media (min-width: 1440px) {
+    gap: 10px;
+    padding: 10px 20px;
+  }
+`;
+
+export const UserModalHistoryItemP = styled.p`
+  @media (min-width: 768px) {
+    font-size: 10px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 18px;
+  }
+`;
+
 export const UserModalForm = styled.div`
   padding: 20px 22px;
   background: #f9f9f9;
@@ -55,19 +135,21 @@ export const UserModalForm = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 
   font-family: Poppins;
   font-size: 15px;
   font-weight: 400;
-  line-height: 21px;
   letter-spacing: 0px;
 
   @media (min-width: 768px) {
     font-size: 24px;
+    gap: 20px;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 1440px) {
     font-size: 38px;
+    padding: 30px;
+    gap: 30px;
   }
 `;
 export const UserModalTitle = styled.h3`
@@ -84,7 +166,6 @@ export const UserModalTitle = styled.h3`
   }
 `;
 export const UserModalInput = styled.input`
-  max-height: 60px;
   padding: 10px 10px;
   border-radius: 10px;
   background: #f9f9f9;
@@ -92,10 +173,8 @@ export const UserModalInput = styled.input`
   cursor: pointer;
 
   font-family: Poppins;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 21px;
-  letter-spacing: 0px;
+  font-size: 10px;
+  text-align: left;
 
   border: 2px solid #1a1a1a;
   &:hover {
@@ -140,9 +219,11 @@ export const ModalUserAlert = styled.div`
   @media (min-width: 768px) {
     width: 50%;
     font-size: 18px;
+    line-height: 21px;
   }
   @media (min-width: 1440px) {
     width: 50%;
     font-size: 32px;
+    line-height: 40px;
   }
 `;
