@@ -19,6 +19,7 @@ import {
   UserModalTitle,
 } from "./UserModal.styled";
 import {
+  authSetFavoriteList,
   authSignInUser,
   authSignOutUser,
   authSignUpUser,
@@ -40,6 +41,7 @@ import {
   OrderListItem,
   OrderListStyled,
 } from "../../../pages/Admin/OrdersList.styled";
+import { UserFavorileList } from "./UserFavoriteList";
 
 export const UserModal = ({ closeUserModal, typeModal }) => {
   const [typeUserModal, setTypeUserModal] = useState(typeModal);
@@ -97,6 +99,7 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
         password,
         userNumber,
         userPostAdress,
+        favoriteList: [],
       });
       setBadPassword(false);
       setTypeUserModal("LogIn");
@@ -123,6 +126,7 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
         password,
       })
     );
+    dispatch(authSetFavoriteList(email));
     closeUserModal();
   };
 
@@ -151,7 +155,7 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
     if (user.email) {
       takeUser();
     }
-  }, [dispatch]);
+  });
 
   /* Change user information*/
 
@@ -377,7 +381,7 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                   </UserModalBtn>
                 </UserModalForm>
               )}
-
+              {userModalNav === "favorite" && <UserFavorileList />}
               {userModalNav === "history" && (
                 <UserModalHistoryDiv>
                   <UserModalTitle>Історія покупок</UserModalTitle>

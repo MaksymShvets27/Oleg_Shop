@@ -7,6 +7,7 @@ const state = {
   isLogIn: false,
   role: "user",
   cashList: [],
+  favoriteList: [],
 };
 
 export const authSlice = createSlice({
@@ -40,6 +41,18 @@ export const authSlice = createSlice({
     clearCashList: (state, { payload }) => ({
       ...state,
       cashList: [],
+    }),
+    setFavoriteList: (state, { payload }) => ({
+      ...state,
+      favoriteList: payload,
+    }),
+    addToFavoriteList: (state, { payload }) => ({
+      ...state,
+      favoriteList: [...state.favoriteList, payload],
+    }),
+    deleteFromFavoriteList: (state, { payload }) => ({
+      ...state,
+      favoriteList: payload,
     }),
   },
 });

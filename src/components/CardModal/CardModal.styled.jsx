@@ -97,6 +97,17 @@ export const CardModalBtn = styled.button`
   }
 `;
 
+export const CardRemoveModalBtn = styled.button`
+  width: 100%;
+  &.active {
+    background: red;
+  }
+
+  &:hover {
+    background: red;
+  }
+`;
+
 export const CardModalLeftDiv = styled.div`
   display: flex;
   gap: 5px;

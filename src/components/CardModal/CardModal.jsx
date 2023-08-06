@@ -8,6 +8,7 @@ import {
   CardModalOtherInfo,
   CardModalStyled,
   CardModalTitle,
+  CardRemoveModalBtn,
   ModalOverlay,
   ModalWrapper,
   StyledGrFormClose,
@@ -15,11 +16,15 @@ import {
   StyledGrFormEdit,
 } from "./CardModal.styled";
 import { useNavigate } from "react-router-dom";
-import { deleteDoc, doc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { selectUser } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
 import { cashListAddGood } from "../../redux/cashList.thunk";
+import {
+  authAddToFavoriteList,
+  authDeleteFavoriteList,
+} from "../../redux/auth.thunk";
 
 export const CardModal = ({ card, closeModal }) => {
   const navigate = useNavigate();
@@ -47,6 +52,26 @@ export const CardModal = ({ card, closeModal }) => {
     dispatch(cashListAddGood(card));
   };
 
+  const sendToFavoriteList = async () => {
+    try {
+      await addDoc(
+        collection(db, "users", `${user.email}`, `favoriteList`),
+        card
+      );
+      alert("Товар добавлено до обраного");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const addToFavoriteList = () => {
+    dispatch(authAddToFavoriteList(card));
+    sendToFavoriteList();
+  };
+
+  const deleteFromFavoriteList = () => {
+    dispatch(authDeleteFavoriteList(card));
+  };
   useEffect(() => {
     document.body.addEventListener("keydown", closeOnESCLogoModal);
     return function cleanup() {
@@ -68,9 +93,16 @@ export const CardModal = ({ card, closeModal }) => {
               <CardModalBtn onClick={addToCashList}>
                 Добавити до покупок
               </CardModalBtn>
-              {user.isLogIn && (
-                <CardModalBtn>Добавити до обранного</CardModalBtn>
-              )}
+              {user.isLogIn &&
+                (user.favoriteList.includes(card) ? (
+                  <CardRemoveModalBtn onClick={deleteFromFavoriteList}>
+                    Видалити з обранного
+                  </CardRemoveModalBtn>
+                ) : (
+                  <CardModalBtn onClick={addToFavoriteList}>
+                    Добавити до обранного
+                  </CardModalBtn>
+                ))}
             </CardModalLeftDiv>
             <CardModalInfo>
               <CardModalTitle>{card.name}</CardModalTitle>

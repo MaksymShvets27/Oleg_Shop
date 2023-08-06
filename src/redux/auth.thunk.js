@@ -5,8 +5,9 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
 import { authSlice } from "./auth.slice";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 
 const {
   updateUserProfile,
@@ -14,6 +15,9 @@ const {
   authSignOut,
   adminRole,
   clearCashList,
+  addToFavoriteList,
+  setFavoriteList,
+  deleteFromFavoriteList,
 } = authSlice.actions;
 
 const authSignUpUser =
@@ -43,7 +47,7 @@ const authSignInUser =
   ({ email, password }) =>
   async (dispatch, getState) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const { uid, displayName, email } = auth.currentUser;
         dispatch(
           updateUserProfile({
@@ -71,7 +75,6 @@ const authSignOutUser = () => async (dispatch, getState) => {
     console.log(`${errorCode},${errorMessage}`);
   });
   dispatch(authSignOut());
-  console.log(getState());
 };
 
 const authStateChangeUser = () => async (dispatch, getState) => {
@@ -92,10 +95,40 @@ const authStateChangeUser = () => async (dispatch, getState) => {
 const authClearCashList = () => (dispatch, getState) => {
   dispatch(clearCashList());
 };
+
+const authAddToFavoriteList = (card) => (dispatch, getState) => {
+  dispatch(addToFavoriteList(card));
+};
+
+const authSetFavoriteList = (email) => async (dispatch, getState) => {
+  const q = query(collection(db, "users", `${email}`, "favoriteList"));
+
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const array = [];
+    querySnapshot.forEach((doc) => {
+      array.push({ ...doc.data(), id: doc.id });
+    });
+    dispatch(setFavoriteList(array));
+  });
+};
+
+const authDeleteFavoriteList = (card) => (dispatch, getState) => {
+  const state = getState();
+  const favoriteList = state.auth.favoriteList;
+
+  const newFavoriteList = favoriteList.filter((item) => {
+    if (item !== card) return item;
+  });
+  dispatch(deleteFromFavoriteList(newFavoriteList));
+};
+
 export {
   authSignInUser,
   authSignOutUser,
   authSignUpUser,
   authStateChangeUser,
   authClearCashList,
+  authAddToFavoriteList,
+  authSetFavoriteList,
+  authDeleteFavoriteList,
 };
