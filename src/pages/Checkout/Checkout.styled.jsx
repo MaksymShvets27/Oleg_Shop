@@ -79,3 +79,13 @@ export const CheckoutSubmit = styled.button`
     font-size: 32px;
   }
 `;
+
+export const CheckoutMessengeForUser = styled.p`
+  font-size: 10px;
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 24px;
+  }
+`;

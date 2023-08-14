@@ -181,6 +181,7 @@ export const AdminPage = () => {
           {state ? "Зілити зміни" : "Залити новий товар"}
         </AdminFormSubmit>
       </AdminForm>
+      <h3>Замовлення</h3>
       <OrdersList />
     </>
   );

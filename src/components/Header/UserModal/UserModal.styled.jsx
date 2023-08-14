@@ -94,6 +94,15 @@ export const UserModalInfoP = styled.p`
   }
 `;
 
+export const HistoryMessengeForUser = styled.p`
+  font-size: 6px;
+  @media (min-width: 768px) {
+    font-size: 10px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 14px;
+  }
+`;
 export const UserModalHistoryDiv = styled.div`
   padding: 20px 22px;
   display: flex;
@@ -121,10 +130,10 @@ export const UserModalHistoryOrderItem = styled.div`
 
 export const UserModalHistoryItemP = styled.p`
   @media (min-width: 768px) {
-    font-size: 10px;
+    font-size: 7px;
   }
   @media (min-width: 1440px) {
-    font-size: 18px;
+    font-size: 7px;
   }
 `;
 
@@ -225,5 +234,74 @@ export const ModalUserAlert = styled.div`
     width: 50%;
     font-size: 32px;
     line-height: 40px;
+  }
+`;
+
+export const HistoryCardImg = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 2px solid black;
+
+  background-position: 50% 50%;
+  background-size: cover;
+
+  @media (min-width: 1440px) {
+    width: 90px;
+    height: 90px;
+  }
+`;
+
+export const HistoryListStyled = styled.ul`
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: reletive;
+  padding: 10px 0;
+
+  @media (min-width: 768px) {
+    padding: 30px 0;
+    row-gap: 30px;
+  }
+`;
+
+export const HistoryListItem = styled.li`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 6px;
+  font-weight: bolder;
+  flex-direction: column;
+  padding: 5px;
+  gap: 5px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 2px solid #1a1a1a;
+
+  background-position: 50% 50%;
+  background-size: cover;
+
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+
+  &:hover {
+    border-color: green;
+  }
+  &:focus {
+    border-color: green;
+  }
+  @media (min-width: 768px) {
+    width: 100px;
+    border-radius: 20px;
+    padding: 20px;
+  }
+  @media (min-width: 768px) {
+    width: 150px;
+    border-radius: 20px;
+    padding: 20px;
   }
 `;

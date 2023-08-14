@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  HistoryCardImg,
+  HistoryListItem,
+  HistoryListStyled,
+  HistoryMessengeForUser,
   ModalOverlay,
   ModalUserAlert,
   ModalWrapper,
@@ -386,11 +390,37 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                 <UserModalHistoryDiv>
                   <UserModalTitle>Історія покупок</UserModalTitle>
 
-                  <OrderListStyled>
+                  <HistoryMessengeForUser>
+                    Для додаткової інформації чи відказу від замовлення
+                  </HistoryMessengeForUser>
+                  <HistoryMessengeForUser>
+                    сконтактуйтесь з адміністратором msshopua@gmail.com
+                  </HistoryMessengeForUser>
+
+                  <HistoryListStyled>
                     {userOrders.map((order) => {
                       return (
-                        <OrderListItem>
+                        <HistoryListItem
+                          style={
+                            order.status === "take"
+                              ? {
+                                  backgroundColor: "yellow",
+                                }
+                              : order.status === "send"
+                              ? {
+                                  backgroundColor: "green",
+                                }
+                              : {}
+                          }
+                        >
                           <UserModalHistoryItemP>
+                            <UserModalHistoryItemP>
+                              Статус:
+                              {order.status === "create" &&
+                                " Замовлення оформлене"}
+                              {order.status === "take" && " Прийняте"}
+                              {order.status === "send" && " Відправлене"}
+                            </UserModalHistoryItemP>
                             Дата замовлення:{" "}
                             {new Intl.DateTimeFormat("ua-Ua", {
                               year: "numeric",
@@ -414,30 +444,30 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                             Адрес Нової почти: {order.userPostAdress}
                           </UserModalHistoryItemP>
                           <UserModalHistoryItemP>
-                            Статус: {order.status}
-                          </UserModalHistoryItemP>
-                          <UserModalHistoryItemP>
                             Список замовлення:
                           </UserModalHistoryItemP>
                           {order.cashList.map((item) => {
                             return (
                               <UserModalHistoryOrderItem>
-                                <UserModalHistoryItemP>
-                                  Id товару: {item.id}
-                                </UserModalHistoryItemP>
+                                <HistoryCardImg
+                                  style={{
+                                    backgroundImage: `url(${item.image})`,
+                                  }}
+                                />
+
                                 <UserModalHistoryItemP>
                                   Назва: {item.name}
                                 </UserModalHistoryItemP>
                                 <UserModalHistoryItemP>
-                                  Ціна: {item.UserModalHistoryItemPrice}
+                                  Ціна: {item.price}
                                 </UserModalHistoryItemP>
                               </UserModalHistoryOrderItem>
                             );
                           })}
-                        </OrderListItem>
+                        </HistoryListItem>
                       );
                     })}
-                  </OrderListStyled>
+                  </HistoryListStyled>
                 </UserModalHistoryDiv>
               )}
             </>

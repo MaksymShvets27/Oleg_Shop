@@ -3,6 +3,7 @@ import { selectUser } from "../../redux/selectors";
 import {
   CheckoutForm,
   CheckoutInput,
+  CheckoutMessengeForUser,
   CheckoutSubmit,
   CheckoutTitle,
   CheckoutUserAlert,
@@ -12,6 +13,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useNavigate } from "react-router-dom";
 import { authClearCashList } from "../../redux/auth.thunk";
+import { HistoryMessengeForUser } from "../../components/Header/UserModal/UserModal.styled";
 
 export const CheckoutPage = () => {
   const user = useSelector(selectUser);
@@ -97,6 +99,12 @@ export const CheckoutPage = () => {
         Попередження, відправка куплених товарів відбувається виключно мережею
         відділень "Нова пошта", оплатою при отриманні !!!
       </CheckoutUserAlert>
+      <CheckoutMessengeForUser>
+        Для додаткової інформації чи відказу від замовлення
+      </CheckoutMessengeForUser>
+      <CheckoutMessengeForUser>
+        сконтактуйтесь з адміністратором msshopua@gmail.com
+      </CheckoutMessengeForUser>
       <CheckoutSubmit onClick={sendToAdmin}>
         Завершити оформлення замовлення
       </CheckoutSubmit>
