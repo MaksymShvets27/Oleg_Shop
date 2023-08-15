@@ -5,15 +5,19 @@ import {
   GoodsListItemName,
   GoodsListItemStyled,
   GoodsListStyled,
+  StyledGrStar,
 } from "./Main.styed";
 import { CardModal } from "../../components/CardModal/CardModal";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/selectors";
 
 export const MainPage = () => {
   const [goods, setGoods] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [card, setCard] = useState();
+  const user = useSelector(selectUser);
 
   let date = new Date().getTime() / 1000;
 
@@ -50,6 +54,11 @@ export const MainPage = () => {
                     backgroundImage: `url(${item.image})`,
                   }}
                 >
+                  {user.favoriteList.map((good) => {
+                    if (good.name === item.name) {
+                      return <StyledGrStar />;
+                    }
+                  })}
                   {date - item.createTime.seconds < 259200 && (
                     <GoodsListItemIsNew>Новинка!</GoodsListItemIsNew>
                   )}

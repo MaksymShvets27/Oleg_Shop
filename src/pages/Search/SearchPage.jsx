@@ -10,6 +10,7 @@ import {
   GoodsListItemName,
   GoodsListItemStyled,
   GoodsListStyled,
+  StyledGrStar,
 } from "../Main/Main.styed";
 import { useEffect, useState } from "react";
 import { CardModal } from "../../components/CardModal/CardModal";
@@ -18,11 +19,13 @@ import { categoryList } from "../../constants/SelectCategory/SelectCategory";
 import { nanoid } from "nanoid";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/selectors";
 
 export const SearchPage = () => {
   const location = useLocation();
   const state = location.state;
-
+  const user = useSelector(selectUser);
   const [goods, setGoods] = useState([]);
 
   const [filtredGoods, setFiltredGoods] = useState(goods);
@@ -43,7 +46,7 @@ export const SearchPage = () => {
     setOpenModal(false);
   };
 
-  const getAllPost = async () => {
+  const getAllPost = () => {
     onSnapshot(collection(db, "goods"), (data) => {
       setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
@@ -71,7 +74,7 @@ export const SearchPage = () => {
       );
       setFiltredGoods(newGoodsArray);
     }
-  }, [filter, categorySelect]);
+  }, [filter, categorySelect, goods]);
 
   return (
     <SearchPageContainer>
@@ -87,7 +90,6 @@ export const SearchPage = () => {
         value={categorySelect}
         onChange={(event) => {
           setCategorySelect(event.target.value);
-          console.log(categorySelect);
         }}
       >
         <AdminFormOption
@@ -141,6 +143,11 @@ export const SearchPage = () => {
                     backgroundImage: `url(${item.image})`,
                   }}
                 >
+                  {user.favoriteList.map((good) => {
+                    if (good.name === item.name) {
+                      return <StyledGrStar />;
+                    }
+                  })}
                   <GoodsListItemInfoStyled>
                     <GoodsListItemName>{item.name}</GoodsListItemName>
                     <p>{item.price} грн.</p>
@@ -150,7 +157,10 @@ export const SearchPage = () => {
             );
           })
         ) : (
-          <NoGoods>Оберіть категорію чи назву товару</NoGoods>
+          <NoGoods>
+            <p>Нічого не знайдено</p>
+            <p> (використайте фільтр пошуку)</p>
+          </NoGoods>
         )}
       </GoodsListStyled>
       {openModal && <CardModal card={card} closeModal={closeModal} />}

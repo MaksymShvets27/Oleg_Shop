@@ -3,6 +3,7 @@ import {
   GoodsListItemInfoStyled,
   GoodsListItemName,
   GoodsListItemStyled,
+  StyledGrStar,
 } from "../Main/Main.styed";
 import {
   CategoryGoodsList,
@@ -15,10 +16,12 @@ import { CardModal } from "../../components/CardModal/CardModal";
 import { useNavigate } from "react-router-dom";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/selectors";
 
 export const CategoryPage = () => {
   const [goods, setGoods] = useState([]);
-
+  const user = useSelector(selectUser);
   const categoryPageList = [];
   const navigate = useNavigate();
 
@@ -69,6 +72,11 @@ export const CategoryPage = () => {
                           backgroundImage: `url(${item.image})`,
                         }}
                       >
+                        {user.favoriteList.map((good) => {
+                          if (good.name === item.name) {
+                            return <StyledGrStar />;
+                          }
+                        })}
                         <GoodsListItemInfoStyled>
                           <GoodsListItemName>{item.name}</GoodsListItemName>
                           <p>{item.price} грн.</p>

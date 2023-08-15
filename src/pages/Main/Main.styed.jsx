@@ -1,3 +1,4 @@
+import { GrStar } from "react-icons/gr";
 import styled from "styled-components";
 
 export const GoodsListStyled = styled.ul`
@@ -83,4 +84,24 @@ export const GoodsListItemIsNew = styled.div`
   rotate: -45deg;
   align-items: center;
   justify-content: center;
+`;
+
+export const StyledGrStar = styled(GrStar)`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  color: yellow;
+  border: 1px solid black;
+  border-radius: 50%;
+  background: black;
+
+  @media (min-width: 768px) {
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+  }
 `;

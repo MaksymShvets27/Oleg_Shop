@@ -94,6 +94,15 @@ export const UserModalInfoP = styled.p`
   }
 `;
 
+export const HistoryStatusCircle = styled.div`
+  width: 10px;
+  height: 10px;
+  border: 2px solid black;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+`;
 export const HistoryMessengeForUser = styled.p`
   font-size: 6px;
   @media (min-width: 768px) {
@@ -274,7 +283,7 @@ export const HistoryListItem = styled.li`
   font-size: 6px;
   font-weight: bolder;
   flex-direction: column;
-  padding: 5px;
+  padding: 10px;
   gap: 5px;
   cursor: pointer;
   position: relative;
@@ -288,12 +297,6 @@ export const HistoryListItem = styled.li`
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
-  &:hover {
-    border-color: green;
-  }
-  &:focus {
-    border-color: green;
-  }
   @media (min-width: 768px) {
     width: 100px;
     border-radius: 20px;

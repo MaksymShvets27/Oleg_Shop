@@ -16,7 +16,15 @@ import {
   StyledGrFormEdit,
 } from "./CardModal.styled";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { selectUser } from "../../redux/selectors";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,6 +38,8 @@ export const CardModal = ({ card, closeModal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
+  let arrayName = user.favoriteList.map((item) => item.name);
 
   const onClickBackdrop = (e) => {
     if (e.currentTarget === e.target) {
@@ -69,9 +79,27 @@ export const CardModal = ({ card, closeModal }) => {
     sendToFavoriteList();
   };
 
+  const queryDeleteFromFavorite = async () => {
+    try {
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, "users", `${user.email}`),
+          where("id", "==", `${card.id}`)
+        )
+      );
+      querySnapshot.forEach((doc) => {
+        console.log(doc.id, ...doc.data());
+      });
+    } catch (e) {
+      console.error("Error take orders: ", e);
+    }
+  };
+
   const deleteFromFavoriteList = () => {
+    queryDeleteFromFavorite();
     dispatch(authDeleteFavoriteList(card));
   };
+
   useEffect(() => {
     document.body.addEventListener("keydown", closeOnESCLogoModal);
     return function cleanup() {
@@ -93,16 +121,15 @@ export const CardModal = ({ card, closeModal }) => {
               <CardModalBtn onClick={addToCashList}>
                 Добавити до покупок
               </CardModalBtn>
-              {user.isLogIn &&
-                (user.favoriteList.includes(card) ? (
-                  <CardRemoveModalBtn onClick={deleteFromFavoriteList}>
-                    Видалити з обранного
-                  </CardRemoveModalBtn>
-                ) : (
-                  <CardModalBtn onClick={addToFavoriteList}>
-                    Добавити до обранного
-                  </CardModalBtn>
-                ))}
+              {user.isLogIn && arrayName.includes(card.name) ? (
+                <CardRemoveModalBtn onClick={deleteFromFavoriteList}>
+                  Видалити з обранного
+                </CardRemoveModalBtn>
+              ) : (
+                <CardModalBtn onClick={addToFavoriteList}>
+                  Добавити до обранного
+                </CardModalBtn>
+              )}
             </CardModalLeftDiv>
             <CardModalInfo>
               <CardModalTitle>{card.name}</CardModalTitle>

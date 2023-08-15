@@ -5,6 +5,7 @@ import {
   HistoryListItem,
   HistoryListStyled,
   HistoryMessengeForUser,
+  HistoryStatusCircle,
   ModalOverlay,
   ModalUserAlert,
   ModalWrapper,
@@ -400,19 +401,20 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                   <HistoryListStyled>
                     {userOrders.map((order) => {
                       return (
-                        <HistoryListItem
-                          style={
-                            order.status === "take"
-                              ? {
-                                  backgroundColor: "yellow",
-                                }
-                              : order.status === "send"
-                              ? {
-                                  backgroundColor: "green",
-                                }
-                              : {}
-                          }
-                        >
+                        <HistoryListItem>
+                          <HistoryStatusCircle
+                            style={
+                              order.status === "take"
+                                ? {
+                                    backgroundColor: "yellow",
+                                  }
+                                : order.status === "send"
+                                ? {
+                                    backgroundColor: "green",
+                                  }
+                                : {}
+                            }
+                          />
                           <UserModalHistoryItemP>
                             <UserModalHistoryItemP>
                               Статус:
