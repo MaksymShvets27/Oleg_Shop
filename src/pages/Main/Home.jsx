@@ -8,10 +8,13 @@ import {
   StyledGrStar,
 } from "./Main.styed";
 import { CardModal } from "../../components/CardModal/CardModal";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase/config";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/selectors";
+import { nanoid } from "nanoid";
+import localStorage from "redux-persist/es/storage";
+import { authSetFavoriteList, authSignInUser } from "../../redux/auth.thunk";
 
 export const MainPage = () => {
   const [goods, setGoods] = useState([]);
@@ -19,7 +22,30 @@ export const MainPage = () => {
   const [card, setCard] = useState();
   const user = useSelector(selectUser);
 
+  const dispatch = useDispatch();
   let date = new Date().getTime() / 1000;
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("userEmail") &&
+      localStorage.getItem("userPassword")
+    ) {
+      LogIn();
+    }
+  }, []);
+
+  const LogIn = async () => {
+    const email = await localStorage.getItem("userEmail");
+    const password = await localStorage.getItem("userPassword");
+    console.log(email, password);
+    dispatch(
+      authSignInUser({
+        email,
+        password,
+      })
+    );
+    dispatch(authSetFavoriteList(email));
+  };
 
   const handleOpenModal = (item) => {
     setCard(item);
@@ -40,9 +66,10 @@ export const MainPage = () => {
   useEffect(() => {
     getAllPost();
   }, []);
+
   return (
     <>
-      <GoodsListStyled id="card">
+      <GoodsListStyled id="cardList">
         {goods.length > 0 &&
           goods.map((item, index) => {
             return (
@@ -54,11 +81,12 @@ export const MainPage = () => {
                     backgroundImage: `url(${item.image})`,
                   }}
                 >
-                  {user.favoriteList.map((good) => {
-                    if (good.name === item.name) {
-                      return <StyledGrStar />;
-                    }
-                  })}
+                  {user.favoriteList &&
+                    user.favoriteList.map((good) => {
+                      if (good.name === item.name) {
+                        return <StyledGrStar />;
+                      }
+                    })}
                   {date - item.createTime.seconds < 259200 && (
                     <GoodsListItemIsNew>Новинка!</GoodsListItemIsNew>
                   )}

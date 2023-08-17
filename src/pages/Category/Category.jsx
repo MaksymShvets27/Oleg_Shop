@@ -72,11 +72,12 @@ export const CategoryPage = () => {
                           backgroundImage: `url(${item.image})`,
                         }}
                       >
-                        {user.favoriteList.map((good) => {
-                          if (good.name === item.name) {
-                            return <StyledGrStar />;
-                          }
-                        })}
+                        {user.favoriteList &&
+                          user.favoriteList.map((good) => {
+                            if (good.name === item.name) {
+                              return <StyledGrStar />;
+                            }
+                          })}
                         <GoodsListItemInfoStyled>
                           <GoodsListItemName>{item.name}</GoodsListItemName>
                           <p>{item.price} грн.</p>

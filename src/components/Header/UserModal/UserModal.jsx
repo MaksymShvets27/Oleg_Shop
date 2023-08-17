@@ -38,6 +38,7 @@ import {
   onSnapshot,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../../../../firebase/config";
@@ -47,6 +48,7 @@ import {
   OrderListStyled,
 } from "../../../pages/Admin/OrdersList.styled";
 import { UserFavorileList } from "./UserFavoriteList";
+import localStorage from "redux-persist/es/storage";
 
 export const UserModal = ({ closeUserModal, typeModal }) => {
   const [typeUserModal, setTypeUserModal] = useState(typeModal);
@@ -124,7 +126,7 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
 
   /* LogIn*/
 
-  const LogIn = () => {
+  const LogIn = async () => {
     dispatch(
       authSignInUser({
         email,
@@ -132,12 +134,29 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
       })
     );
     dispatch(authSetFavoriteList(email));
+    try {
+      await updateDoc(doc(db, "users", `${email}`), { isLogIn: true });
+    } catch (e) {
+      console.error("Error adding user: ", e);
+    }
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userPassword", password);
+
     closeUserModal();
   };
 
-  const LogOut = () => {
-    dispatch(authSignOutUser());
+  const LogOut = async () => {
     closeUserModal();
+
+    dispatch(authSignOutUser());
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userPassword");
+
+    try {
+      await updateDoc(doc(db, "users", `${user.email}`), { isLogIn: false });
+    } catch (e) {
+      console.error("Error adding user: ", e);
+    }
   };
 
   /* Get user information*/
@@ -160,25 +179,19 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
     if (user.email) {
       takeUser();
     }
-  });
+  }, []);
 
   /* Change user information*/
 
-  const changeUser = () => {
-    changeUserQuery({
-      name: name,
-      email: user.email,
-      password,
-      userNumber,
-      userPostAdress,
-    });
-    setUserModalNav("info");
-  };
-
-  const changeUserQuery = async (data) => {
+  const changeUserQuery = async () => {
     try {
-      await setDoc(doc(db, "users", `${data.email}`), data);
+      console.log(userNumber, userPostAdress);
+      await updateDoc(doc(db, "users", `${user.email}`), {
+        userNumber: userNumber,
+        userPostAdress: userPostAdress,
+      });
       alert("Change user success");
+      setUserModalNav("info");
     } catch (e) {
       console.error("Error change user: ", e);
     }
@@ -200,8 +213,6 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
       setUserOrders((data) =>
         data.sort((a, b) => (a.postDate > b.postDate ? -1 : 1))
       );
-
-      console.log(userOrders);
     } catch (e) {
       console.error("Error take orders: ", e);
     }
@@ -376,13 +387,8 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                     виключно мережею відділень "Нова пошта", оплатою при
                     отриманні !!!
                   </ModalUserAlert>
-                  <UserModalBtn
-                    onClick={changeUser}
-                    style={badPassword ? { backgroundColor: "red" } : {}}
-                  >
-                    {badPassword
-                      ? "Невірний пароль або e-mail"
-                      : "Змінити дані"}
+                  <UserModalBtn onClick={changeUserQuery}>
+                    Змінити дані
                   </UserModalBtn>
                 </UserModalForm>
               )}

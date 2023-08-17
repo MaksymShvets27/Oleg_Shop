@@ -7,7 +7,14 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../firebase/config";
 import { authSlice } from "./auth.slice";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 
 const {
   updateUserProfile,
@@ -101,15 +108,13 @@ const authAddToFavoriteList = (card) => (dispatch, getState) => {
 };
 
 const authSetFavoriteList = (email) => async (dispatch, getState) => {
-  const q = query(collection(db, "users", `${email}`, "favoriteList"));
-
-  const unsubscribe = onSnapshot(q, (querySnapshot) => {
-    const array = [];
-    querySnapshot.forEach((doc) => {
-      array.push({ ...doc.data(), id: doc.id });
-    });
-    dispatch(setFavoriteList(array));
-  });
+  const q = await getDoc(doc(db, "users", `${email}`));
+  if (q.exists()) {
+    const { favoriteList } = q.data();
+    dispatch(setFavoriteList(favoriteList));
+  } else {
+    console.log("No such document!");
+  }
 };
 
 const authDeleteFavoriteList = (card) => (dispatch, getState) => {

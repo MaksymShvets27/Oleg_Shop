@@ -23,6 +23,8 @@ import {
   doc,
   getDocs,
   query,
+  setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -38,9 +40,9 @@ export const CardModal = ({ card, closeModal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-
-  let arrayName = user.favoriteList.map((item) => item.name);
-
+  let favoriteList = user.favoriteList;
+  let arrayName =
+    favoriteList.length > 0 ? user.favoriteList.map((item) => item.name) : [];
   const onClickBackdrop = (e) => {
     if (e.currentTarget === e.target) {
       closeModal();
@@ -64,10 +66,9 @@ export const CardModal = ({ card, closeModal }) => {
 
   const sendToFavoriteList = async () => {
     try {
-      await addDoc(
-        collection(db, "users", `${user.email}`, `favoriteList`),
-        card
-      );
+      await updateDoc(doc(db, "users", `${user.email}`), {
+        favoriteList: [...favoriteList, card],
+      });
       alert("Товар добавлено до обраного");
     } catch (e) {
       console.log(e);
@@ -81,17 +82,16 @@ export const CardModal = ({ card, closeModal }) => {
 
   const queryDeleteFromFavorite = async () => {
     try {
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, "users", `${user.email}`),
-          where("id", "==", `${card.id}`)
-        )
-      );
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, ...doc.data());
+      const newFavoriteList = favoriteList.filter((item) => {
+        if (item !== card) return item;
       });
+      console.log(newFavoriteList);
+      await updateDoc(doc(db, "users", `${user.email}`), {
+        favoriteList: newFavoriteList,
+      });
+      alert("Товар добавлено до обраного");
     } catch (e) {
-      console.error("Error take orders: ", e);
+      console.log(e);
     }
   };
 
@@ -121,15 +121,16 @@ export const CardModal = ({ card, closeModal }) => {
               <CardModalBtn onClick={addToCashList}>
                 Добавити до покупок
               </CardModalBtn>
-              {user.isLogIn && arrayName.includes(card.name) ? (
-                <CardRemoveModalBtn onClick={deleteFromFavoriteList}>
-                  Видалити з обранного
-                </CardRemoveModalBtn>
-              ) : (
-                <CardModalBtn onClick={addToFavoriteList}>
-                  Добавити до обранного
-                </CardModalBtn>
-              )}
+              {user.isLogIn &&
+                (arrayName.includes(card.name) ? (
+                  <CardRemoveModalBtn onClick={deleteFromFavoriteList}>
+                    Видалити з обранного
+                  </CardRemoveModalBtn>
+                ) : (
+                  <CardModalBtn onClick={addToFavoriteList}>
+                    Добавити до обранного
+                  </CardModalBtn>
+                ))}
             </CardModalLeftDiv>
             <CardModalInfo>
               <CardModalTitle>{card.name}</CardModalTitle>
