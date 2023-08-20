@@ -68,11 +68,11 @@ export const AdminPage = () => {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    if (role != "admin") {
-      navigation("/");
-    }
-  });
+  // useEffect(() => {
+  //   if (role != "admin") {
+  //     navigation("/");
+  //   }
+  // });
   return (
     <>
       <AdminForm id="form">

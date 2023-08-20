@@ -23,9 +23,12 @@ export const OrdersList = () => {
 
   const getAllOrders = () => {
     onSnapshot(collection(db, "orders"), (data) => {
-      setOrders(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setOrders(
+        data.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+          .sort((a, b) => (a.postDate.seconds > b.postDate.seconds ? -1 : 1))
+      );
     });
-    setOrders(orders?.sort((a, b) => (a.postDate > b.postDate ? -1 : 1)));
   };
 
   const deleteOrder = async (id) => {
@@ -42,7 +45,7 @@ export const OrdersList = () => {
 
   useEffect(() => {
     getAllOrders();
-  }, []);
+  });
 
   return (
     <OrderListStyled>
