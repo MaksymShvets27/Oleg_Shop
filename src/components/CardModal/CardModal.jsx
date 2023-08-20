@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   CardModalBtn,
   CardModalImg,
@@ -35,10 +35,12 @@ import {
   authAddToFavoriteList,
   authDeleteFavoriteList,
 } from "../../redux/auth.thunk";
+import ImageModal from "../ImgModal/ImgModal";
 
 export const CardModal = ({ card, closeModal }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [openImgModal, setOpenImgModal] = useState(false);
   const user = useSelector(selectUser);
   let favoriteList = user.favoriteList;
   let arrayName =
@@ -104,6 +106,10 @@ export const CardModal = ({ card, closeModal }) => {
     };
   }, []);
 
+  const onCloseImgModal = () => {
+    setOpenImgModal(false);
+  };
+
   return (
     <ModalOverlay onClick={onClickBackdrop}>
       <ModalWrapper onClick={onClickBackdrop}>
@@ -113,6 +119,9 @@ export const CardModal = ({ card, closeModal }) => {
               <CardModalImg
                 style={{
                   backgroundImage: `url(${card.image})`,
+                }}
+                onClick={() => {
+                  setOpenImgModal(true);
                 }}
               />
               <CardModalBtn onClick={addToCashList}>
@@ -192,6 +201,12 @@ export const CardModal = ({ card, closeModal }) => {
             </>
           )}
         </CardModalStyled>
+        {openImgModal && (
+          <ImageModal
+            onCloseModal={onCloseImgModal}
+            currentImageUrl={card.image}
+          />
+        )}
       </ModalWrapper>
     </ModalOverlay>
   );

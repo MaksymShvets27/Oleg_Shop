@@ -232,8 +232,6 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
       setName(name);
       setUserNumber(userNumber);
       setUserPostAdress(userPostAdress);
-    } else {
-      console.log("No such document!");
     }
   };
 

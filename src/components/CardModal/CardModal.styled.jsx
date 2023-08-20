@@ -59,7 +59,7 @@ export const CardModalImg = styled.div`
   height: 100px;
   border-radius: 20px;
   border: 2px solid black;
-
+  cursor: pointer;
   background-position: 50% 50%;
   background-size: cover;
   @media (min-width: 768px) {
@@ -88,6 +88,7 @@ export const CardModalInfo = styled.div`
 
 export const CardModalBtn = styled.button`
   width: 100%;
+  background: black;
   &.active {
     background: green;
   }
