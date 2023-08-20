@@ -520,14 +520,9 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                               {order.status === "send" && " Відправлене"}
                             </UserModalHistoryItemP>
                             Дата замовлення:{" "}
-                            {new Intl.DateTimeFormat("ua-Ua", {
-                              year: "numeric",
-                              month: "2-digit",
-                              day: "2-digit",
-                              hour: "2-digit",
-                              minute: "2-digit",
-                              second: "2-digit",
-                            }).format(order.postDate)}
+                            {new Intl.DateTimeFormat("en-US").format(
+                              order.postDate.seconds
+                            )}
                           </UserModalHistoryItemP>
                           <UserModalHistoryItemP>
                             ФІП: {order.userFullName}

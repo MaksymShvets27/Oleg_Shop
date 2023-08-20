@@ -104,13 +104,26 @@ export const CheckoutPage = () => {
       !postAdressError
     ) {
       try {
-        await setDoc(doc(db, "orders", `${new Date()}`), {
+        const today = new Date();
+        const date =
+          today.getFullYear() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getDate() +
+          " " +
+          today.getHours() +
+          ":" +
+          today.getMinutes() +
+          ":" +
+          today.getSeconds();
+        await setDoc(doc(db, "orders", `${date}`), {
           userFullName,
           userNumber,
           userEmail,
           userPostAdress,
-          postDate: new Date(),
-          id: `${userEmail}${new Date()}`,
+          postDate: date,
+          id: `${userEmail}${date}`,
           status: "create",
           cashList: user.cashList,
         });
