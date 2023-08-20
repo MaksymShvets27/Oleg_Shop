@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { ImgModal, ImgModalOverlay } from "./ImgModal.styled";
+import { ImgModal, ImgModalImage, ImgModalOverlay } from "./ImgModal.styled";
 
 class ImageModal extends React.Component {
   static propTypes = {
@@ -26,7 +26,7 @@ class ImageModal extends React.Component {
     return (
       <ImgModalOverlay onClick={this.props.onCloseModal}>
         <ImgModal>
-          <img src={this.props.currentImageUrl} alt="" />
+          <ImgModalImage src={this.props.currentImageUrl} alt="" />
         </ImgModal>
       </ImgModalOverlay>
     );

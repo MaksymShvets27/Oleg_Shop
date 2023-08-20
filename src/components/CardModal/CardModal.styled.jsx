@@ -89,6 +89,7 @@ export const CardModalInfo = styled.div`
 export const CardModalBtn = styled.button`
   width: 100%;
   background: black;
+  color: white;
   &.active {
     background: green;
   }

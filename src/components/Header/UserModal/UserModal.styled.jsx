@@ -298,11 +298,6 @@ export const HistoryListItem = styled.li`
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
   @media (min-width: 768px) {
-    width: 100px;
-    border-radius: 20px;
-    padding: 20px;
-  }
-  @media (min-width: 768px) {
     width: 150px;
     border-radius: 20px;
     padding: 20px;
