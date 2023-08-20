@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   GoodsListItemInfoStyled,
+  GoodsListItemIsNew,
   GoodsListItemName,
   GoodsListItemStyled,
   StyledGrStar,
@@ -28,6 +29,8 @@ export const CategoryPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [card, setCard] = useState();
 
+  let date = new Date().getTime() / 1000;
+
   const handleOpenModal = (item) => {
     setCard(item);
     setOpenModal(true);
@@ -39,7 +42,13 @@ export const CategoryPage = () => {
 
   const getAllPost = async () => {
     onSnapshot(collection(db, "goods"), (data) => {
-      setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setGoods(
+        data.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+          .sort((a, b) =>
+            a.createTime.seconds > b.createTime.seconds ? -1 : 1
+          )
+      );
     });
   };
 
@@ -78,6 +87,9 @@ export const CategoryPage = () => {
                               return <StyledGrStar />;
                             }
                           })}
+                        {date - item.createTime.seconds < 259200 && (
+                          <GoodsListItemIsNew>Новинка!</GoodsListItemIsNew>
+                        )}
                         <GoodsListItemInfoStyled>
                           <GoodsListItemName>{item.name}</GoodsListItemName>
                           <p>{item.price} грн.</p>

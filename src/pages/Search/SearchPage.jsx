@@ -7,6 +7,7 @@ import {
 } from "./SearchPage.styled";
 import {
   GoodsListItemInfoStyled,
+  GoodsListItemIsNew,
   GoodsListItemName,
   GoodsListItemStyled,
   GoodsListStyled,
@@ -37,6 +38,8 @@ export const SearchPage = () => {
     state && state.category ? state.category : ""
   );
 
+  let date = new Date().getTime() / 1000;
+
   const handleOpenModal = (item) => {
     setCard(item);
     setOpenModal(true);
@@ -48,7 +51,13 @@ export const SearchPage = () => {
 
   const getAllPost = () => {
     onSnapshot(collection(db, "goods"), (data) => {
-      setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setGoods(
+        data.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+          .sort((a, b) =>
+            a.createTime.seconds > b.createTime.seconds ? -1 : 1
+          )
+      );
     });
   };
 
@@ -149,6 +158,9 @@ export const SearchPage = () => {
                         return <StyledGrStar />;
                       }
                     })}
+                  {date - item.createTime.seconds < 259200 && (
+                    <GoodsListItemIsNew>Новинка!</GoodsListItemIsNew>
+                  )}
                   <GoodsListItemInfoStyled>
                     <GoodsListItemName>{item.name}</GoodsListItemName>
                     <p>{item.price} грн.</p>

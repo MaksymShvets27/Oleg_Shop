@@ -54,13 +54,20 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
   const [typeUserModal, setTypeUserModal] = useState(typeModal);
   const [badPassword, setBadPassword] = useState(false);
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const [passwordDublicate, setPasswordDublicate] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordDublicateError, setPasswordDublicateError] = useState("");
   const [userNumber, setUserNumber] = useState("");
+  const [userNumberError, setUserNumberError] = useState("");
   const [userPostAdress, setUserPostAdress] = useState("");
   const [userOrders, setUserOrders] = useState([]);
   const [userModalNav, setUserModalNav] = useState("info");
+
+  const [logInError, setLogInError] = useState("");
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -83,10 +90,66 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
       document.body.removeEventListener("keydown", closeOnESCLogoModal);
     };
   }, []);
+
+  const handleFullName = (e) => {
+    setName(e.target.value);
+    const re =
+      /^(\W+[^!@#$%^&*()_+~`/?\|=1234567890])\s+(\W+[^!@#$%^&*()_+~`/?\|=1234567890])\s+(\W+[^!@#$%^&*()_+~`/?\|=1234567890])$/;
+    if (!re.test(String(e.target.value).toLowerCase())) {
+      setNameError("Введіть повнe призвіще, ім'я, побатькові");
+    } else {
+      setNameError("");
+    }
+  };
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+    const re = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/;
+    if (!re.test(String(e.target.value).toLowerCase())) {
+      setEmailError(
+        "Електронний адрес повинен містити літери латинського алфавіту, символи '@' та '.'"
+      );
+    } else {
+      setEmailError("");
+    }
+  };
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    if (e.target.value.length < 6) {
+      setPasswordError("Довжина пароля повина бути від 6 символів");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const handleDublicatePassword = (e) => {
+    setPasswordDublicate(e.target.value);
+    if (e.target.value !== password) {
+      setPasswordDublicateError("Введені паролі нe співпадають");
+    } else {
+      setPasswordDublicateError("");
+    }
+  };
+
+  const handlePhoneNumber = (e) => {
+    setUserNumber(e.target.value);
+    const re =
+      /^([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])([0-9])$/;
+    if (!re.test(String(e.target.value))) {
+      setUserNumberError("Номер невірного формату (наприклад '043*******')");
+    } else {
+      setUserNumberError("");
+    }
+  };
   /* Registration*/
   const SignUp = () => {
     if (
-      password === passwordDublicate &&
+      !nameError &&
+      !emailError &&
+      !passwordError &&
+      !passwordDublicateError &&
+      !userNumberError &&
+      passwordDublicate &&
       name &&
       email &&
       password &&
@@ -118,7 +181,6 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
   const addUser = async (data) => {
     try {
       await setDoc(doc(db, "users", `${data.email}`), data);
-      alert("Add user success");
     } catch (e) {
       console.error("Error adding user: ", e);
     }
@@ -127,22 +189,22 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
   /* LogIn*/
 
   const LogIn = async () => {
-    dispatch(
-      authSignInUser({
-        email,
-        password,
-      })
-    );
-    dispatch(authSetFavoriteList(email));
     try {
+      dispatch(
+        authSignInUser({
+          email,
+          password,
+        })
+      );
+      dispatch(authSetFavoriteList(email));
       await updateDoc(doc(db, "users", `${email}`), { isLogIn: true });
+      localStorage.setItem("userEmail", email);
+      localStorage.setItem("userPassword", password);
+      closeUserModal();
     } catch (e) {
+      setLogInError("Email не зареестрований або невіний пароль");
       console.error("Error adding user: ", e);
     }
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userPassword", password);
-
-    closeUserModal();
   };
 
   const LogOut = async () => {
@@ -178,22 +240,23 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
   useEffect(() => {
     if (user.email) {
       takeUser();
+      setUserNumberError("");
     }
-  }, []);
+  }, [userModalNav, dispatch]);
 
   /* Change user information*/
 
   const changeUserQuery = async () => {
-    try {
-      console.log(userNumber, userPostAdress);
-      await updateDoc(doc(db, "users", `${user.email}`), {
-        userNumber: userNumber,
-        userPostAdress: userPostAdress,
-      });
-      alert("Change user success");
-      setUserModalNav("info");
-    } catch (e) {
-      console.error("Error change user: ", e);
+    if (!userNumberError) {
+      try {
+        await updateDoc(doc(db, "users", `${user.email}`), {
+          userNumber: userNumber,
+          userPostAdress: userPostAdress,
+        });
+        setUserModalNav("info");
+      } catch (e) {
+        console.error("Error change user: ", e);
+      }
     }
   };
 
@@ -233,44 +296,63 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                 name="name"
                 value={name}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  handleFullName(e);
                 }}
-                placeholder="Введіть ФІБ"
+                placeholder="Введіть ПІБ"
+                style={nameError ? { borderColor: "red" } : {}}
               />
+              {nameError && <ModalUserAlert>{nameError}</ModalUserAlert>}
               <UserModalInput
                 required
                 name="email"
                 value={email}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  handleEmail(e);
                 }}
                 placeholder="Введіть контактну електронну адресу"
+                style={emailError ? { borderColor: "red" } : {}}
               />
+              {emailError && <ModalUserAlert>{emailError}</ModalUserAlert>}
               <UserModalInput
                 required
                 name="password"
                 value={password}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  handlePassword(e);
                 }}
                 placeholder="Введіть пароль"
+                autoComplete="on"
+                minlength="5"
+                style={passwordError ? { borderColor: "red" } : {}}
               />
+              {passwordError && (
+                <ModalUserAlert>{passwordError}</ModalUserAlert>
+              )}
               <UserModalInput
                 required
                 name="passwordDublicate"
                 value={passwordDublicate}
                 onChange={(e) => {
-                  setPasswordDublicate(e.target.value);
+                  handleDublicatePassword(e);
                 }}
                 placeholder="Повторіть пароль"
+                style={passwordDublicateError ? { borderColor: "red" } : {}}
               />
+              {passwordDublicateError && (
+                <ModalUserAlert>{passwordDublicateError}</ModalUserAlert>
+              )}
               <UserModalInput
                 value={userNumber}
+                type="number"
                 onChange={(e) => {
-                  setUserNumber(e.target.value);
+                  handlePhoneNumber(e);
                 }}
                 placeholder="Введіть контактний номер телефону"
+                style={userNumberError ? { borderColor: "red" } : {}}
               />
+              {userNumberError && (
+                <ModalUserAlert>{userNumberError}</ModalUserAlert>
+              )}
               <UserModalInput
                 value={userPostAdress}
                 onChange={(e) => {
@@ -286,7 +368,7 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                 style={badPassword ? { backgroundColor: "red" } : {}}
                 onClick={SignUp}
               >
-                {badPassword ? "Невірний пароль або e-mail" : "Зареєструватись"}
+                {"Зареєструватись"}
               </UserModalBtn>
             </UserModalForm>
           )}
@@ -310,6 +392,7 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                   setPassword(e.target.value);
                 }}
               />
+              {logInError && <ModalUserAlert>{logInError}</ModalUserAlert>}
               <UserModalBtn onClick={LogIn}>Увійти</UserModalBtn>
             </UserModalForm>
           )}
@@ -371,16 +454,23 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                 <UserModalForm id="userFormConfig">
                   <UserModalTitle>Зміна данних</UserModalTitle>
                   <UserModalInput
+                    value={userNumber}
+                    type="number"
                     onChange={(e) => {
-                      setUserNumber(e.target.value);
+                      handlePhoneNumber(e);
                     }}
-                    placeholder="Введіть новий номер телефону"
+                    placeholder="Введіть контактний номер телефону"
+                    style={userNumberError ? { borderColor: "red" } : {}}
                   />
+                  {userNumberError && (
+                    <ModalUserAlert>{userNumberError}</ModalUserAlert>
+                  )}
                   <UserModalInput
+                    value={userPostAdress}
                     onChange={(e) => {
                       setUserPostAdress(e.target.value);
                     }}
-                    placeholder="Введіть нову адресу відділення пошти"
+                    placeholder="Введіть адресу відділення пошти"
                   />
                   <ModalUserAlert>
                     Попередження, відправка куплених товарів відбувається

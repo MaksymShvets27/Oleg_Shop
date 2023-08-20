@@ -37,7 +37,6 @@ export const MainPage = () => {
   const LogIn = async () => {
     const email = await localStorage.getItem("userEmail");
     const password = await localStorage.getItem("userPassword");
-    console.log(email, password);
     dispatch(
       authSignInUser({
         email,
@@ -58,9 +57,14 @@ export const MainPage = () => {
 
   const getAllPost = () => {
     onSnapshot(collection(db, "goods"), (data) => {
-      setGoods(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setGoods(
+        data.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+          .sort((a, b) =>
+            a.createTime.seconds > b.createTime.seconds ? -1 : 1
+          )
+      );
     });
-    setGoods(goods?.sort((a, b) => (a.createTime > b.createTime ? -1 : 1)));
   };
 
   useEffect(() => {

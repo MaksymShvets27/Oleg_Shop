@@ -122,7 +122,7 @@ const authDeleteFavoriteList = (card) => (dispatch, getState) => {
   const favoriteList = state.auth.favoriteList;
 
   const newFavoriteList = favoriteList.filter((item) => {
-    if (item !== card) return item;
+    if (item.name !== card.name) return item;
   });
   dispatch(deleteFromFavoriteList(newFavoriteList));
 };

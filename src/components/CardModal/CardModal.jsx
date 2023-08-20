@@ -69,7 +69,6 @@ export const CardModal = ({ card, closeModal }) => {
       await updateDoc(doc(db, "users", `${user.email}`), {
         favoriteList: [...favoriteList, card],
       });
-      alert("Товар добавлено до обраного");
     } catch (e) {
       console.log(e);
     }
@@ -83,13 +82,11 @@ export const CardModal = ({ card, closeModal }) => {
   const queryDeleteFromFavorite = async () => {
     try {
       const newFavoriteList = favoriteList.filter((item) => {
-        if (item !== card) return item;
+        if (item.name !== card.name) return item;
       });
-      console.log(newFavoriteList);
       await updateDoc(doc(db, "users", `${user.email}`), {
         favoriteList: newFavoriteList,
       });
-      alert("Товар добавлено до обраного");
     } catch (e) {
       console.log(e);
     }
