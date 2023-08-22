@@ -52,8 +52,13 @@ export const AdminPage = () => {
       e.preventDefault();
       const { image, name, price, sex, producent, category, size, otherInfo } =
         this.elements;
+      const imgArray = image.value.split(" ").filter((img) => {
+        if (img) {
+          return img;
+        }
+      });
       const data = {
-        image: image.value,
+        image: imgArray,
         name: name.value,
         price: price.value,
         sex: sex.value || "",
@@ -77,7 +82,7 @@ export const AdminPage = () => {
     <>
       <AdminForm id="form">
         <p>Малюнок</p>
-        <AdminFormInput
+        <AdminFormTextArea
           required
           name="image"
           placeholder="Додати ссилку на картинку"

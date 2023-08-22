@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import {
   CardModalBtn,
   CardModalImg,
+  CardModalImgNextIcon,
+  CardModalImgPreviousIcon,
   CardModalInfo,
   CardModalLeftDiv,
   CardModalMainDiv,
@@ -42,6 +44,7 @@ export const CardModal = ({ card, closeModal }) => {
   const dispatch = useDispatch();
   const [openImgModal, setOpenImgModal] = useState(false);
   const user = useSelector(selectUser);
+  const [currentImg, setCurrentImg] = useState(0);
   let favoriteList = user.favoriteList;
   let arrayName =
     favoriteList.length > 0 ? user.favoriteList.map((item) => item.name) : [];
@@ -106,6 +109,13 @@ export const CardModal = ({ card, closeModal }) => {
     };
   }, []);
 
+  const nextImage = () => {
+    setCurrentImg((prevState) => prevState + 1);
+  };
+
+  const previousImage = () => {
+    setCurrentImg((prevState) => prevState - 1);
+  };
   const onCloseImgModal = () => {
     setOpenImgModal(false);
   };
@@ -116,14 +126,25 @@ export const CardModal = ({ card, closeModal }) => {
         <CardModalStyled>
           <CardModalMainDiv>
             <CardModalLeftDiv>
+              {currentImg !== 0 && typeof card.image !== "string" && (
+                <CardModalImgPreviousIcon onClick={previousImage} />
+              )}
               <CardModalImg
                 style={{
-                  backgroundImage: `url(${card.image})`,
+                  backgroundImage: `url(${
+                    typeof card.image === "string"
+                      ? card.image
+                      : card.image[currentImg]
+                  })`,
                 }}
                 onClick={() => {
                   setOpenImgModal(true);
                 }}
-              />
+              ></CardModalImg>
+              {currentImg !== card.image.length - 1 &&
+                typeof card.image !== "string" && (
+                  <CardModalImgNextIcon onClick={nextImage} />
+                )}
               <CardModalBtn onClick={addToCashList}>
                 Добавити до покупок
               </CardModalBtn>
@@ -204,7 +225,10 @@ export const CardModal = ({ card, closeModal }) => {
         {openImgModal && (
           <ImageModal
             onCloseModal={onCloseImgModal}
+            currentImageIndex={currentImg}
             currentImageUrl={card.image}
+            nextImage={nextImage}
+            previousImage={previousImage}
           />
         )}
       </ModalWrapper>

@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import {
+  CardModalImgNextIcon,
+  CardModalImgPreviousIcon,
+} from "../CardModal/CardModal.styled";
 
 export const ImgModalOverlay = styled.div`
   position: fixed;
@@ -13,15 +17,82 @@ export const ImgModalOverlay = styled.div`
   z-index: 1200;
 `;
 
-export const ImgModalImage = styled.img`
-  width: 100%;
-  height: 100%;
-`;
 export const ImgModal = styled.div`
-  max-width: calc(100vw - 120px);
-  max-height: calc(100vh - 50px);
+  position: relative;
+  width: 80%;
+  height: 80%;
+  border-radius: 20px;
+  border: 2px solid black;
+  cursor: pointer;
+  background-position: 50% 50%;
+  background-size: cover;
+  @media (min-width: 768px) {
+    width: 40%;
+  }
+`;
+
+export const ImgModalImgNextIcon = styled(CardModalImgNextIcon)`
+  background: black;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 35%;
+  right: 5%;
+  left: auto;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  z-index: 1300;
+  & polygon {
+    stroke: white;
+  }
+  &:hover {
+    background: green;
+  }
+
+  @media (min-width: 768px) {
+    padding: 15px;
+    width: 75px;
+    height: 75px;
+    right: 20%;
+  }
+
   @media (min-width: 1440px) {
-    max-width: calc(100vw - 50px);
-    max-height: calc(100vh - 24px);
+    padding: 15px;
+    width: 105px;
+    height: 105px;
+  }
+`;
+
+export const ImgModalImgPreviousIcon = styled(CardModalImgPreviousIcon)`
+  background: black;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 35%;
+  left: 10%;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  z-index: 1300;
+  & polygon {
+    stroke: white;
+  }
+  &:hover {
+    background: green;
+  }
+
+  @media (min-width: 768px) {
+    padding: 15px;
+    width: 75px;
+    height: 75px;
+    left: 20%;
+  }
+  @media (min-width: 1440px) {
+    padding: 15px;
+    width: 105px;
+    height: 105px;
   }
 `;

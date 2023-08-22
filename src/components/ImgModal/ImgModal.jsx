@@ -1,11 +1,27 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { ImgModal, ImgModalImage, ImgModalOverlay } from "./ImgModal.styled";
+import {
+  ImgModal,
+  ImgModalImgNextIcon,
+  ImgModalImgPreviousIcon,
+  ImgModalOverlay,
+} from "./ImgModal.styled";
 
 class ImageModal extends React.Component {
   static propTypes = {
     onCloseModal: PropTypes.func.isRequired,
-    currentImageUrl: PropTypes.string.isRequired,
+    currentImageUrl: PropTypes.string.isRequired || PropTypes.array.isRequired,
+    nextImage: PropTypes.func.isRequired,
+    previousImage: PropTypes.func.isRequired,
+    currentImageIndex: PropTypes.number.isRequired,
+  };
+
+  nextImage = () => {
+    this.props.nextImage();
+  };
+
+  previousImage = () => {
+    this.props.previousImage();
   };
 
   keydown = (event) => {
@@ -24,11 +40,28 @@ class ImageModal extends React.Component {
 
   render() {
     return (
-      <ImgModalOverlay onClick={this.props.onCloseModal}>
-        <ImgModal>
-          <ImgModalImage src={this.props.currentImageUrl} alt="" />
-        </ImgModal>
-      </ImgModalOverlay>
+      <>
+        {this.props.currentImageIndex !==
+          this.props.currentImageUrl.length - 1 &&
+          typeof this.props.currentImageUrl !== "string" && (
+            <ImgModalImgNextIcon onClick={this.nextImage} />
+          )}
+        <ImgModalOverlay onClick={this.props.onCloseModal}>
+          <ImgModal
+            style={{
+              backgroundImage: `url(${
+                typeof this.props.currentImageUrl === "string"
+                  ? this.props.currentImageUrl
+                  : this.props.currentImageUrl[this.props.currentImageIndex]
+              })`,
+            }}
+          ></ImgModal>
+        </ImgModalOverlay>
+        {this.props.currentImageIndex !== 0 &&
+          typeof this.props.currentImageUrl !== "string" && (
+            <ImgModalImgPreviousIcon onClick={this.previousImage} />
+          )}
+      </>
     );
   }
 }

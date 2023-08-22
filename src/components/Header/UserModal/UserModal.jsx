@@ -542,7 +542,11 @@ export const UserModal = ({ closeUserModal, typeModal }) => {
                               <UserModalHistoryOrderItem>
                                 <HistoryCardImg
                                   style={{
-                                    backgroundImage: `url(${item.image})`,
+                                    backgroundImage: `url(${
+                                      typeof item.image === "string"
+                                        ? item.image
+                                        : item.image[0]
+                                    })`,
                                   }}
                                 />
 

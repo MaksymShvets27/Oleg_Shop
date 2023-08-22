@@ -78,7 +78,11 @@ export const CategoryPage = () => {
                         key={index}
                         onClick={() => handleOpenModal(item)}
                         style={{
-                          backgroundImage: `url(${item.image})`,
+                          backgroundImage: `url(${
+                            typeof item.image === "string"
+                              ? item.image
+                              : item.image[0]
+                          })`,
                         }}
                       >
                         {user.favoriteList &&

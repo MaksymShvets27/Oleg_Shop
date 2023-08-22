@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { GrFormClose, GrFormEdit, GrFormTrash } from "react-icons/gr";
+import {
+  GrCaretNext,
+  GrCaretPrevious,
+  GrFormClose,
+  GrFormEdit,
+  GrFormTrash,
+} from "react-icons/gr";
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -55,6 +61,7 @@ export const CardModalStyled = styled.div`
 export const CardModalTitle = styled.h3``;
 
 export const CardModalImg = styled.div`
+  position: relative;
   width: 100px;
   height: 100px;
   border-radius: 20px;
@@ -69,6 +76,77 @@ export const CardModalImg = styled.div`
   @media (min-width: 1440px) {
     width: 400px;
     height: 400px;
+  }
+`;
+
+export const CardModalImgNextIcon = styled(GrCaretNext)`
+ background: black;
+border:1px solid black;
+border-radius: 50%;
+padding:5px;
+ position: absolute;
+  top: 60px;
+    left: 96px;
+    width: 10px;
+    height: 10px;
+  cursor: pointer;
+  z-index:5;
+  & polygon {
+    stroke: white;
+  }
+  &:hover {
+    background: green;
+  }
+ 
+  }
+
+   @media (min-width: 768px) {
+    top: 115px;
+  left: 190px;
+padding:10px;
+  width: 30px;
+  height: 30px;
+  }
+    @media (min-width: 1440px) {
+    top: 205px;
+    left: 370px;
+    padding: 15px;
+  width: 50px;
+  height: 50px;
+  }`;
+
+export const CardModalImgPreviousIcon = styled(GrCaretPrevious)`
+  background: black;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 5px;
+  position: absolute;
+  top: 60px;
+  left: 12px;
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  z-index: 5;
+  & polygon {
+    stroke: white;
+  }
+  &:hover {
+    background: green;
+  }
+
+  @media (min-width: 768px) {
+    top: 115px;
+    left: 25px;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+  }
+  @media (min-width: 1440px) {
+    top: 205px;
+    left: 25px;
+    padding: 15px;
+    width: 50px;
+    height: 50px;
   }
 `;
 

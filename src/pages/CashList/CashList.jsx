@@ -30,7 +30,11 @@ export const CashListPage = () => {
               <CashListItemStyled>
                 <CashCardImg
                   style={{
-                    backgroundImage: `url(${card.image})`,
+                    backgroundImage: `url(${
+                      typeof card.image === "string"
+                        ? card.image
+                        : card.image[0]
+                    })`,
                   }}
                 />
                 <CashCardInfo>
