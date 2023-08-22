@@ -107,7 +107,7 @@ export const SearchPage = () => {
     const documentSnapshots = await getDocs(first);
     let array = [];
     documentSnapshots.docs.map((doc) => {
-      if (doc.data().name.includes(filter)) {
+      if (doc.data().name.toLowerCase().includes(filter.toLowerCase())) {
         array.push({ ...doc.data(), id: doc.id });
       }
     });
@@ -125,7 +125,7 @@ export const SearchPage = () => {
 
     let array = [];
     documentSnapshots.docs.map((doc) => {
-      if (doc.data().name.includes(filter)) {
+      if (doc.data().name.toLowerCase().includes(filter.toLowerCase())) {
         array.push({ ...doc.data(), id: doc.id });
       }
     });
