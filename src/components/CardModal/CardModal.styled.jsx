@@ -91,6 +91,9 @@ padding:5px;
     height: 10px;
   cursor: pointer;
   z-index:5;
+
+  transition: background 0.5s, border-color 0.5s;
+
   & polygon {
     stroke: white;
   }
@@ -127,6 +130,8 @@ export const CardModalImgPreviousIcon = styled(GrCaretPrevious)`
   height: 10px;
   cursor: pointer;
   z-index: 5;
+  transition: background 0.5s, border-color 0.5s;
+
   & polygon {
     stroke: white;
   }
@@ -168,6 +173,8 @@ export const CardModalBtn = styled.button`
   width: 100%;
   background: black;
   color: white;
+  transition: background 0.5s;
+
   &.active {
     background: green;
   }
@@ -273,9 +280,9 @@ export const StyledGrFormEdit = styled(GrFormEdit)`
 export const CardModalOtherInfo = styled.p`
   font-size: 6px;
   @media (min-width: 768px) {
-    font-size: 9px;
+    font-size: 12px;
   }
   @media (min-width: 1440px) {
-    font-size: 15px;
+    font-size: 18px;
   }
 `;

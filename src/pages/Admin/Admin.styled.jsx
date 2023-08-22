@@ -126,6 +126,8 @@ export const AdminFormTextArea = styled.textarea`
   }
 `;
 export const AdminFormSubmit = styled.button`
+  transition: background 0.5s;
+
   &:hover {
     background: green;
   }

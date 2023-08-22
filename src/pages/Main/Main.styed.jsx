@@ -105,3 +105,37 @@ export const StyledGrStar = styled(GrStar)`
     height: 30px;
   }
 `;
+
+export const MoreButton = styled.button`
+  color: white;
+  font-family: Poppins;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  border: 2px solid black;
+  border-radius: 20px 10px;
+
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+
+  transition: background-color 0.5s, border-color 0.5s;
+
+  &:hover {
+    background: green;
+    border-color: green;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 24px;
+    padding: 10px 10px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 38px;
+    padding: 35px;
+    margin-bottom: 25px;
+  }
+`;

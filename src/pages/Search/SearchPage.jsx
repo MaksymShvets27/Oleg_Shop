@@ -18,7 +18,15 @@ import { CardModal } from "../../components/CardModal/CardModal";
 import { AdminFormOption, AdminFormSelect } from "../Admin/Admin.styled";
 import { categoryList } from "../../constants/SelectCategory/SelectCategory";
 import { nanoid } from "nanoid";
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/selectors";
@@ -32,7 +40,7 @@ export const SearchPage = () => {
   const [filtredGoods, setFiltredGoods] = useState(goods);
   const [openModal, setOpenModal] = useState(false);
   const [card, setCard] = useState();
-
+  const [lastElements, setLastElements] = useState("");
   const [filter, setFilter] = useState("");
   const [categorySelect, setCategorySelect] = useState(
     state && state.category ? state.category : ""
@@ -49,41 +57,92 @@ export const SearchPage = () => {
     setOpenModal(false);
   };
 
-  const getAllPost = () => {
-    onSnapshot(collection(db, "goods"), (data) => {
-      setGoods(
-        data.docs
-          .map((doc) => ({ ...doc.data(), id: doc.id }))
-          .sort((a, b) =>
-            a.createTime.seconds > b.createTime.seconds ? -1 : 1
-          )
-      );
+  const getAllPost = async () => {
+    setFiltredGoods([]);
+    const first = query(
+      collection(db, "goods"),
+      orderBy("createTime", "desc"),
+      limit(24)
+    );
+    const documentSnapshots = await getDocs(first);
+    // Get the last visible document
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
+
+    documentSnapshots.docs.map((doc) => {
+      setFiltredGoods((prevstate) => [
+        ...prevstate,
+        { ...doc.data(), id: doc.id },
+      ]);
     });
   };
 
-  useEffect(() => {
-    getAllPost();
-  }, []);
+  const getGoodsByCategory = async () => {
+    setFiltredGoods([]);
+    const first = query(
+      collection(db, "goods"),
+      where("category", "==", categorySelect),
+      orderBy("createTime", "desc"),
+      limit(24)
+    );
+    const documentSnapshots = await getDocs(first);
+    // Get the last visible document
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
+
+    documentSnapshots.docs.map((doc) => {
+      setFiltredGoods((prevstate) => [
+        ...prevstate,
+        { ...doc.data(), id: doc.id },
+      ]);
+    });
+  };
+
+  const getGoodsByFilter = async () => {
+    setFiltredGoods([]);
+    const first = query(collection(db, "goods"), orderBy("createTime", "desc"));
+
+    const documentSnapshots = await getDocs(first);
+    let array = [];
+    documentSnapshots.docs.map((doc) => {
+      if (doc.data().name.includes(filter)) {
+        array.push({ ...doc.data(), id: doc.id });
+      }
+    });
+    setFiltredGoods(array);
+  };
+
+  const getGoodsByFilterAndCategory = async () => {
+    setFiltredGoods([]);
+    const first = query(
+      collection(db, "goods"),
+      where("category", "==", categorySelect),
+      orderBy("createTime", "desc")
+    );
+    const documentSnapshots = await getDocs(first);
+
+    let array = [];
+    documentSnapshots.docs.map((doc) => {
+      if (doc.data().name.includes(filter)) {
+        array.push({ ...doc.data(), id: doc.id });
+      }
+    });
+    setFiltredGoods(array);
+  };
 
   useEffect(() => {
-    if (filter.length > 0) {
-      let newGoodsArray = goods.filter(
-        (item) =>
-          item.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) &&
-          item.category
-            .toLocaleLowerCase()
-            .includes(categorySelect.toLocaleLowerCase())
-      );
-      setFiltredGoods(newGoodsArray);
+    if (!(filter.length > 0) && !categorySelect) {
+      getAllPost();
+    } else if (!(filter.length > 0) && categorySelect) {
+      getGoodsByCategory();
+    } else if (filter.length > 0 && !categorySelect) {
+      getGoodsByFilter();
     } else {
-      let newGoodsArray = goods.filter((item) =>
-        item.category
-          .toLocaleLowerCase()
-          .includes(categorySelect.toLocaleLowerCase())
-      );
-      setFiltredGoods(newGoodsArray);
+      getGoodsByFilterAndCategory();
     }
-  }, [filter, categorySelect, goods]);
+  }, [filter, categorySelect]);
 
   return (
     <SearchPageContainer>

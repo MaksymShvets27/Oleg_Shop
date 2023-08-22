@@ -22,11 +22,9 @@ export const StyledNavigationLink = styled(NavLink)`
   border: 2px solid black;
   border-radius: 20px 10px;
 
+  transition: color 0.25s, border-color 0.25s;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
-
-  transition: border-color 0.25s;
-  transition: color 0.25s;
 
   &.active {
     color: green;
