@@ -86,7 +86,7 @@ border-radius: 50%;
 padding:5px;
  position: absolute;
   top: 60px;
-    left: 96px;
+    left: 94px;
     width: 10px;
     height: 10px;
   cursor: pointer;
@@ -102,14 +102,14 @@ padding:5px;
 
    @media (min-width: 768px) {
     top: 115px;
-  left: 190px;
+  left: 175px;
 padding:10px;
   width: 30px;
   height: 30px;
   }
     @media (min-width: 1440px) {
     top: 205px;
-    left: 370px;
+    left: 345px;
     padding: 15px;
   width: 50px;
   height: 50px;
@@ -122,7 +122,7 @@ export const CardModalImgPreviousIcon = styled(GrCaretPrevious)`
   padding: 5px;
   position: absolute;
   top: 60px;
-  left: 12px;
+  left: 13px;
   width: 10px;
   height: 10px;
   cursor: pointer;
