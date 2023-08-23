@@ -11,6 +11,7 @@ import {
   GoodsListItemName,
   GoodsListItemStyled,
   GoodsListStyled,
+  MoreButton,
   StyledGrStar,
 } from "../Main/Main.styed";
 import { useEffect, useState } from "react";
@@ -20,11 +21,13 @@ import { categoryList } from "../../constants/SelectCategory/SelectCategory";
 import { nanoid } from "nanoid";
 import {
   collection,
+  endAt,
   getDocs,
   limit,
-  onSnapshot,
   orderBy,
   query,
+  startAfter,
+  startAt,
   where,
 } from "firebase/firestore";
 import { db } from "../../../firebase/config";
@@ -78,6 +81,26 @@ export const SearchPage = () => {
     });
   };
 
+  const getNewPosts = async () => {
+    const next = query(
+      collection(db, "goods"),
+      orderBy("createTime", "desc"),
+      startAfter(lastElements),
+      limit(24)
+    );
+    const documentSnapshots = await getDocs(next);
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
+
+    documentSnapshots.docs.map((doc) => {
+      setFiltredGoods((prevstate) => [
+        ...prevstate,
+        { ...doc.data(), id: doc.id },
+      ]);
+    });
+  };
+
   const getGoodsByCategory = async () => {
     setFiltredGoods([]);
     const first = query(
@@ -100,11 +123,81 @@ export const SearchPage = () => {
     });
   };
 
+  const getMoreGoodsByCategory = async () => {
+    const next = query(
+      collection(db, "goods"),
+      where("category", "==", categorySelect),
+      orderBy("createTime", "desc"),
+      startAfter(lastElements),
+      limit(24)
+    );
+    const documentSnapshots = await getDocs(next);
+    // Get the last visible document
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
+
+    documentSnapshots.docs.map((doc) => {
+      setFiltredGoods((prevstate) => [
+        ...prevstate,
+        { ...doc.data(), id: doc.id },
+      ]);
+    });
+  };
+
   const getGoodsByFilter = async () => {
     setFiltredGoods([]);
-    const first = query(collection(db, "goods"), orderBy("createTime", "desc"));
-
+    const first = query(collection(db, "goods"), orderBy("name"), limit(25));
     const documentSnapshots = await getDocs(first);
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
+
+    documentSnapshots.docs.map((doc) => {
+      if (doc.data().name.toLowerCase().includes(filter.toLowerCase())) {
+        setFiltredGoods((prevstate) => [
+          ...prevstate,
+          { ...doc.data(), id: doc.id },
+        ]);
+      }
+    });
+  };
+
+  const getMoreGoodsByFilter = async () => {
+    const next = query(
+      collection(db, "goods"),
+      orderBy("name"),
+      startAfter(lastElements),
+      limit(24)
+    );
+    const documentSnapshots = await getDocs(next);
+    // Get the last visible document
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
+
+    documentSnapshots.docs.map((doc) => {
+      if (doc.data().name.toLowerCase().includes(filter.toLowerCase())) {
+        setFiltredGoods((prevstate) => [
+          ...prevstate,
+          { ...doc.data(), id: doc.id },
+        ]);
+      }
+    });
+  };
+
+  const getGoodsByFilterAndCategory = async () => {
+    setFiltredGoods([]);
+    const first = query(
+      collection(db, "goods"),
+      where("category", "==", categorySelect),
+      orderBy("createTime", "desc"),
+      limit(24)
+    );
+    const documentSnapshots = await getDocs(first);
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
     let array = [];
     documentSnapshots.docs.map((doc) => {
       if (doc.data().name.toLowerCase().includes(filter.toLowerCase())) {
@@ -114,22 +207,28 @@ export const SearchPage = () => {
     setFiltredGoods(array);
   };
 
-  const getGoodsByFilterAndCategory = async () => {
-    setFiltredGoods([]);
-    const first = query(
+  const getMoreGoodsByFilterAndCategory = async () => {
+    const next = query(
       collection(db, "goods"),
       where("category", "==", categorySelect),
-      orderBy("createTime", "desc")
+      orderBy("createTime", "desc"),
+      startAfter(lastElements),
+      limit(24)
     );
-    const documentSnapshots = await getDocs(first);
+    const documentSnapshots = await getDocs(next);
+    // Get the last visible document
+    const lastVisible =
+      documentSnapshots.docs[documentSnapshots.docs.length - 1];
+    setLastElements(lastVisible);
 
-    let array = [];
     documentSnapshots.docs.map((doc) => {
       if (doc.data().name.toLowerCase().includes(filter.toLowerCase())) {
-        array.push({ ...doc.data(), id: doc.id });
+        setFiltredGoods((prevstate) => [
+          ...prevstate,
+          { ...doc.data(), id: doc.id },
+        ]);
       }
     });
-    setFiltredGoods(array);
   };
 
   useEffect(() => {
@@ -143,6 +242,18 @@ export const SearchPage = () => {
       getGoodsByFilterAndCategory();
     }
   }, [filter, categorySelect]);
+
+  const getMore = () => {
+    if (!(filter.length > 0) && !categorySelect) {
+      getNewPosts();
+    } else if (!(filter.length > 0) && categorySelect) {
+      getMoreGoodsByCategory();
+    } else if (filter.length > 0 && !categorySelect) {
+      getMoreGoodsByFilter();
+    } else {
+      getMoreGoodsByFilterAndCategory();
+    }
+  };
 
   return (
     <SearchPageContainer>
@@ -239,6 +350,7 @@ export const SearchPage = () => {
           </NoGoods>
         )}
       </GoodsListStyled>
+      <MoreButton onClick={getMore}>Побачити більше</MoreButton>
       {openModal && <CardModal card={card} closeModal={closeModal} />}
     </SearchPageContainer>
   );

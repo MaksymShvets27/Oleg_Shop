@@ -29,6 +29,8 @@ export const CategoryPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [card, setCard] = useState();
 
+  const [widthHTML, setWidthHTML] = useState("");
+
   let date = new Date().getTime() / 1000;
 
   const handleOpenModal = (item) => {
@@ -63,16 +65,37 @@ export const CategoryPage = () => {
   });
   categoryPageList.sort();
 
+  useEffect(() => {
+    function handleResize() {
+      console.log(window.innerWidth);
+      setWidthHTML(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [setWidthHTML]);
+
   return (
     <>
       <CategoryGoodsList>
         {categoryPageList.map((category) => {
+          let i = 0;
           return (
             <CategoryGoodsListItem>
               <CategoryGoodsListTitle>{category}</CategoryGoodsListTitle>
               <CategoryItemGoodsList>
                 {goods.map((item, index) => {
                   if (item.category === category) {
+                    i++;
+                    if (
+                      (window.innerWidth === 2160 && i > 8) ||
+                      (window.innerWidth === 1152 && i > 6) ||
+                      (window.innerWidth === 480 && i > 4)
+                    ) {
+                      return;
+                    }
                     return (
                       <GoodsListItemStyled
                         key={index}
